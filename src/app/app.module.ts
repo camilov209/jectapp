@@ -22,6 +22,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { UbicacionProvider } from '../providers/ubicacion/ubicacion';
 import { AgmCoreModule } from '@agm/core';
 
+//Facebook
+import { Facebook } from '@ionic-native/facebook';
+
 
 
 @NgModule({
@@ -52,7 +55,8 @@ import { AgmCoreModule } from '@agm/core';
     UsuarioProvider,
     AngularFireDatabase,
     Geolocation,
-    UbicacionProvider
+    UbicacionProvider,
+    Facebook
   ]
 })
 export class AppModule {}
