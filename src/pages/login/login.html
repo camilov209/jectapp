@@ -35,10 +35,14 @@
 
 <ion-footer>
   <ion-toolbar color="azulJectapp">
-     <button ion-button clear class="botonOlvidasteContrasena">¿Olvidaste tu contraseña?</button>
+     <button ion-button clear class="botonOlvidasteContrasena"
+     		  (click)="resetPass()">
+     	¿Olvidaste tu contraseña?
+     </button>
     
     <ion-buttons end>
-      <button ion-button icon-right color="royal">
+      <button ion-button icon-right color="royal" 
+      		  (click)="crearCuenta()">
         CREAR CUENTA
       </button>
     </ion-buttons>

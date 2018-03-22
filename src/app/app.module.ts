@@ -27,14 +27,17 @@ import { Facebook } from '@ionic-native/facebook';
 
 //Paginas
 import { LoginPage } from '../pages/login/login';
-
+import { RegistroPage } from '../pages/registro/registro';
+import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    RegistroPage,
+    OlvidoPassPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,9 @@ import { LoginPage } from '../pages/login/login';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    RegistroPage,
+    OlvidoPassPage
   ],
   providers: [
     StatusBar,

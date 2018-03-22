@@ -1,0 +1,60 @@
+<ion-header>
+
+  <ion-navbar color="azulJectapp">
+    <ion-title>Registro</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<img src="assets/recursos/camara.png" class="Camara" />
+
+	<div class="datosUsuario">
+		<ion-list inset no-lines>
+
+			  <ion-item class="fondoInput">
+			    <ion-input placeholder="Nombre" type="text" class="inputColor"></ion-input>
+			  </ion-item>
+
+			  <br>
+
+			  <ion-item class="fondoInput">
+			    <ion-input placeholder="Usuario" type="text" class="inputColor"></ion-input>
+			  </ion-item>
+
+			  <br>
+
+			  <ion-item class="fondoInput">
+			    <ion-input placeholder="Zona de registro" type="text" class="inputColor"></ion-input>
+			  </ion-item>
+
+			  <br>
+
+			  <ion-item class="fondoInput">
+			    <ion-input placeholder="Email" type="email" class="inputColor"></ion-input>
+			  </ion-item>
+
+			  <br>
+
+			  <ion-item class="fondoInput">
+			    <ion-input placeholder="Contraseña" type="password" class="inputColor"></ion-input>
+			  </ion-item>
+
+			  <br>
+
+			  <ion-item>
+			    <ion-label class="inputColor">Permitir notificaciones</ion-label>
+			    <ion-checkbox [(ngModel)]="notificaciones"></ion-checkbox>
+			  </ion-item>
+
+			  <p class="parrafo">He leído y acepto los terminos y condiciones</p>
+
+			  <button ion-button class="botonRegistro">REGISTRARSE</button>
+
+		</ion-list>
+	</div>
+
+
+</ion-content>
