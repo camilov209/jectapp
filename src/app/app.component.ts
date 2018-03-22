@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 //PAGINAS
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+
 
 //SERVICIOS
 import { UsuarioProvider } from '../providers/usuario/usuario';
@@ -28,7 +30,7 @@ export class MyApp {
     			// code...
     			this.rootPage = HomePage;
     		}else{
-    			this.rootPage ="LoginPage";
+    			this.rootPage =LoginPage;
     		}
 
     		statusBar.styleDefault();

@@ -1,51 +1,47 @@
 <ion-content padding>
+	
+	<img src="assets/recursos/logo_jectapp.png" class="imageLogo" />
 
-  <ion-slides pager>
+	<div class="datosUsuario">
+		<ion-list inset>
 
-      <ion-slide>
+			  <ion-item class="fondoInput">
+			    <ion-label><ion-icon name="person" class="iconColor"></ion-icon></ion-label>
+			    <ion-input placeholder="Email o Usuario" type="email" class="inputColor"></ion-input>
+			  </ion-item>
 
-        <ion-toolbar>
-        </ion-toolbar>
+			  <br>
 
-        <img src="assets/img/usuario.jpg" class="slide-image"/>
-        <h2 class="slide-title">Ingrese su clave</h2>
-        <p>Para continuar, debe de ingresar su código</p>
+			  <ion-item class="fondoInput">
+			    <ion-label><ion-icon name="lock" class="iconColor"></ion-icon></ion-label>
+			    <ion-input placeholder="Contraseña" type="password" class="inputColor"></ion-input>
+			  </ion-item>
 
-        <ion-list>
-          <ion-item>
-            <ion-label>Clave</ion-label>
-            <ion-input type="text" [(ngModel)]="clave"
-                      (keyup.enter)="continuar()"></ion-input>
-          </ion-item>
-        </ion-list>
+			  <br>
 
-        <button ion-button
-                [disabled]="clave.length < 4"
-                (click)="continuar()">
-          Verificar
-        </button>
+			  <button ion-button class="botonLogin">LOGIN</button>
 
-      </ion-slide>
+			  <br>
+			  <br>
+			  <br>
+			
+			  <button ion-button class="botonFacebook"></button>
+			  <button ion-button class="botonGamil"></button>
 
-
-      <!-- Ultimo Slide -->
-      <ion-slide>
-        <ion-toolbar>
-        </ion-toolbar>
-
-        <img src="assets/img/check.jpg" class="slide-image"/>
-        <h2 class="slide-title">¿Listo para empezar?</h2>
-
-        <button ion-button large clear icon-right color="primary"
-                (click)="ingresar()">
-          Continuar
-          <ion-icon name="arrow-forward"></ion-icon>
-        </button>
-
-      </ion-slide>
-      <!-- Fin del último slide -->
-
-    </ion-slides>
-
+		</ion-list>
+	</div>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="azulJectapp">
+     <button ion-button clear class="botonOlvidasteContrasena">¿Olvidaste tu contraseña?</button>
+    
+    <ion-buttons end>
+      <button ion-button icon-right color="royal">
+        CREAR CUENTA
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>

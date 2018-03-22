@@ -1,38 +1,78 @@
 page-login {
 
-	.toolbar-background {
-  background: #fff;
-  border-color: transparent;
-}
+	.imageLogo{
+		position: absolute;
+		left: 100px; 
+		top: 50px;
+	}
 
-.slide-zoom {
-  height: 100%;
-}
+	.datosUsuario{
+		position: absolute;
+		left: 60px; 
+		top: 200px;
+	}
 
-.slide-title {
-  margin-top: 2.8rem;
-}
+	.fondoInput{	
+		background-color:  #C9E6EE;
+	}
 
-.slide-image {
-  max-height: 50%;
-  max-width: 60%;
-  margin: 18px 0;
-}
+	.inputColor{
+		color: #1F365B;
+		font-weight:bold;
+	}
 
-b {
-  font-weight: 500;
-}
+	.botonLogin{
+		color: white;
+		background: #1F365B;
+		float:none;
+		text-align:center;
+		margin: auto; 
+		display: block;
+		width:100px;
+		height:50px;
+	}
 
-p {
-  padding: 0 40px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #60646B;
+	.iconColor{
+		color: #1F365B;
+	}
 
-  b {
-    color: #000000;
-  }
-}
+	.botonFacebook{
+		width:60px;
+		height:60px;
+		background-color:#3B5998;
+		margin: 5px;
+		padding:10px;
+		border-radius: 50px;
+		font-size:11px;
+		line-height:32px;
+		float:left;
+		left: 40px;
+		background-image: url("../assets/recursos/facebook.png");
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	.botonGamil{
+		width:60px;
+		height:60px;
+		background-color:#DB4437;
+		margin: 5px;
+		padding:10px;
+		border-radius: 50px;
+		font-size:11px;
+		line-height:32px;
+		float:left;
+		left: 50px;
+		background-image: url("../assets/recursos/gmail.png");
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	.botonOlvidasteContrasena{
+		font-size:0.8em;
+		color:white;
+	}
+
 
 
 }

@@ -25,12 +25,16 @@ import { AgmCoreModule } from '@agm/core';
 //Facebook
 import { Facebook } from '@ionic-native/facebook';
 
+//Paginas
+import { LoginPage } from '../pages/login/login';
+
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,7 @@ import { Facebook } from '@ionic-native/facebook';
   entryComponents: [
     MyApp,
     HomePage,
+    LoginPage
   ],
   providers: [
     StatusBar,
