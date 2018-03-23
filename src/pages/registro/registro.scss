@@ -9,7 +9,7 @@ page-registro {
 	.datosUsuario{
 		position: absolute;
 		left: 30px; 
-		top: 120px;
+		top: 135px;
 		width: 300px;
 	}
 
@@ -37,6 +37,13 @@ page-registro {
 		font-size:0.9em;
 		font-style: italic;
 		text-align: center;
+	}
+
+	.error{
+		font-size:0.7em;
+		font-style: italic;
+		text-align: justify;
+		color: red;
 	}
 
 }

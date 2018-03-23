@@ -17,9 +17,9 @@ export class UsuarioProvider {
 
   }
 
-  verificarUsuario(clave:string){
+  verificarUsuario(usuario:string, clave:string){
 
-
+    usuario = usuario.toLowerCase();
   	clave = clave.toLowerCase();
 
   	let promesa = new Promise((resolve, reject)=>{

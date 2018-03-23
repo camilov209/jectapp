@@ -12,10 +12,18 @@ import { OlvidoPassPage } from '../olvido-pass/olvido-pass';
 })
 export class LoginPage {
 
+  usuario:string = "";
+  clave:string = "";
+
   constructor(	public navCtrl: NavController, 
-  				public navParams: NavParams) {
+  				      public navParams: NavParams) {
   }
 
+  ingresar(){
+
+
+
+  }
 
   crearCuenta(){
     this.navCtrl.push(RegistroPage);

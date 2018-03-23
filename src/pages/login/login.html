@@ -7,19 +7,19 @@
 
 			  <ion-item class="fondoInput">
 			    <ion-label><ion-icon name="person" class="iconColor"></ion-icon></ion-label>
-			    <ion-input placeholder="Email o Usuario" type="email" class="inputColor"></ion-input>
+			    <ion-input placeholder="Email o Usuario" type="email" [(ngModel)]="usuario" class="inputColor"></ion-input>
 			  </ion-item>
 
 			  <br>
 
 			  <ion-item class="fondoInput">
 			    <ion-label><ion-icon name="lock" class="iconColor"></ion-icon></ion-label>
-			    <ion-input placeholder="Contraseña" type="password" class="inputColor"></ion-input>
+			    <ion-input placeholder="Contraseña" type="password" [(ngModel)]="clave" (keyup.enter)="ingresar()" class="inputColor"></ion-input>
 			  </ion-item>
 
 			  <br>
 
-			  <button ion-button class="botonLogin">LOGIN</button>
+			  <button ion-button class="botonLogin" [disabled]="clave.length < 4 || usuario.length < 4" (click)="ingresar()">LOGIN</button>
 
 			  <br>
 			  <br>
