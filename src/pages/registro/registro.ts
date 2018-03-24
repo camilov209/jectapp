@@ -8,6 +8,9 @@ import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 //Paginas
 import { LoginPage } from '../login/login'
 
+//Servicio Usuario
+import { UsuarioProvider } from '../../providers/usuario/usuario';
+
 @Component({
   selector: 'page-registro',
   templateUrl: 'registro.html',
@@ -22,6 +25,7 @@ export class RegistroPage {
 	clave:string = "";
 	notificacion:boolean;
 	loading: Loading;
+	existe:boolean = false;
 	
 
   constructor(	public navCtrl: NavController, 
@@ -30,7 +34,8 @@ export class RegistroPage {
   				private loadingCtrl:LoadingController,
   				private alertCtrl:AlertController,
   				private toastCtrl:ToastController,
-  				public formBuilder: FormBuilder) {
+  				public formBuilder: FormBuilder,
+  				private usuarioProvider:UsuarioProvider) {
 
   	this.myForm = this.createMyForm();
 
@@ -54,44 +59,31 @@ export class RegistroPage {
     this.usuario = this.usuario.toLowerCase();
     this.email = this.email.toLowerCase();
 
-  	let promesa = new Promise((resolve, reject)=>{
+    this.usuarioProvider.createUser(this.nombres, this.usuario, this.zona, this.email, this.clave, this.notificacion).then((respuesta)=>{
+    	if (respuesta) {
+			let toast = this.toastCtrl.create({
+		      message: 'Usuario creado',
+		      duration: 3000
+		    });
+		  toast.present();
+		  this.myForm.reset();
 
-  		this.afDB.list('/users/'+this.usuario).valueChanges().subscribe(data=>{
+    	}else{
+    		let toast = this.toastCtrl.create({
+		      message: 'Usuario no disponible',
+		      duration: 3000
+		    });
+		  toast.present();
+		  this.existe = true;
 
-  			if (data.length === 0) {
-  				// USERNAME DISPONIBLE
-				let usuario = {
-			 		name: this.nombres,
-			 		username: this.usuario,
-			 		email:this.email,
-			 		password:this.clave,
-			 		notificacion: this.notificacion,
-			 	};
 
-			 	this.afDB.object(`/users/${this.usuario}`).update(usuario);
-			 	let toast = this.toastCtrl.create({
-					      message: 'Usuario creado exitosamente',
-					      duration: 4000
-					    });
-				toast.present();
-  				
-  			}else{
-  				// USERNAME YA EXISTE
-  				console.log("USER NAME NO DISPONIBLE");
-  			}
+    	}
+    });
 
-  			return promesa;
-
-  		});
-
-  	}).catch(error=>{
-  		console.log("Error en Promesa Verifica Usuario: "+JSON.stringify(error));
-  	});
   }
 
-
-
 private createMyForm(){
+	
     return this.formBuilder.group({
 	      nombre: ['', [Validators.required, Validators.minLength(6)]],
 	      usuario: ['', [Validators.required, Validators.minLength(6)]],
@@ -101,24 +93,5 @@ private createMyForm(){
 	      notificacion:[true],
     });
   }
-
-private limpiarDatos(){
-
-	this.nombres = "";
-	this.usuario = "";
-	this.zona = "";
-	this.email = "";
-	this.clave = "";
-
-	this.myForm.value.nombre 	= "";
-	this.myForm.value.usuario 	= "";
-	this.myForm.value.zona 		= "";
-	this.myForm.value.email 	= "";
-	this.myForm.value.password 	= "";
-	this.myForm.value.notificacion 	= "";
-
-  	}
-
-
 
 }

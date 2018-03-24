@@ -17,6 +17,41 @@ export class UsuarioProvider {
 
   }
 
+
+  createUser(nombres:string, usuario:string, zona:string, email:string, clave:string, notificacion:boolean){
+
+    let promesa = new Promise ((resolve, reject)=>{
+
+      this.afDB.list('/users/'+usuario).valueChanges().subscribe(data=>{
+
+        if (data.length == 0) {
+          // USERNAME DISPONIBLE
+            let dataUser = {
+               name: nombres,
+               username: usuario,
+               email:email,
+               password:clave,
+               notificacion: notificacion,
+             };
+
+              this.afDB.object(`/users/${usuario}`).update(dataUser);
+              resolve(true);
+          
+        }else{
+          // USERNAME YA EXISTE
+             resolve(false);
+        }
+
+      });
+
+    });
+
+    return promesa;
+
+    
+
+  }
+
   verificarUsuario(usuario:string, clave:string){
 
     usuario = usuario.toLowerCase();

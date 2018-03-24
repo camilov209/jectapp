@@ -36,6 +36,10 @@
           <p color="danger" ion-text *ngIf="myForm.get('usuario').hasError('required')">Campo requerido</p>
           <p color="danger" ion-text *ngIf="myForm.get('usuario').hasError('minlength')">Ingresar minimo 6 caracteres</p>
         </ion-item>
+        <ion-item *ngIf="existe">
+          <p color="danger" ion-text *ngIf="myForm.get('usuario').hasError('minlength')">Nombre de usuario ya esta en uso</p>
+        </ion-item>
+
         <br>
 
 
