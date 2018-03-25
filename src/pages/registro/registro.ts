@@ -11,6 +11,7 @@ import { LoginPage } from '../login/login'
 //Servicio Usuario
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 
+
 @Component({
   selector: 'page-registro',
   templateUrl: 'registro.html',
@@ -67,6 +68,7 @@ export class RegistroPage {
 		    });
 		  toast.present();
 		  this.myForm.reset();
+		  this.navCtrl.setRoot(LoginPage);
 
     	}else{
     		let toast = this.toastCtrl.create({
@@ -80,6 +82,10 @@ export class RegistroPage {
     	}
     });
 
+  }
+
+  borrarExiste(){
+  	this.existe = false;
   }
 
 private createMyForm(){
