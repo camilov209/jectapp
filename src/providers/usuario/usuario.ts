@@ -48,9 +48,53 @@ export class UsuarioProvider {
 
     return promesa;
 
-    
+  }
+
+  verifyUser(usuario:string){
+
+     let promesa = new Promise ((resolve, reject)=>{
+
+      this.afDB.list('/users/'+usuario).valueChanges().subscribe(data=>{
+
+        if (data.length == 0) {
+          // USERNAME DISPONIBLE
+            resolve(false);
+          
+        }else{
+          // USERNAME YA EXISTE
+            resolve(true);
+        }
+
+      });
+
+    });
+
+    return promesa;
 
   }
+
+  verifyEmail(email:string){
+
+     let promesa = new Promise ((resolve, reject)=>{
+
+       this.afDB.database.ref('/users').orderByChild('email').equalTo(email).once('value').then((res)=>{
+           if (res.val() == null) {
+             //Correo disponible
+             resolve(false);
+           }else{
+             //Correo no disponible
+             resolve(true);
+           }
+       });
+
+    });
+
+    return promesa;
+
+  }
+
+
+
 
   verificarUsuario(usuario:string, clave:string){
 

@@ -30,7 +30,7 @@
 
 
         <ion-item class="fondoInput">
-          <ion-input formControlName="usuario" type="text" placeholder="Usuario" class="inputColor" (focus)="borrarExiste()"></ion-input>
+          <ion-input formControlName="usuario" type="text" placeholder="Usuario" class="inputColor" (focus)="borrarExiste()" (focusout)="verificaUsuario()"></ion-input>
         </ion-item>
          <ion-item *ngIf="myForm.get('usuario').errors && myForm.get('usuario').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('usuario').hasError('required')">Campo requerido</p>
@@ -53,11 +53,14 @@
         <br>
 
         <ion-item class="fondoInput">
-          <ion-input formControlName="email" type="email" placeholder="Email" class="inputColor"></ion-input>
+          <ion-input formControlName="email" type="email" placeholder="Email" class="inputColor" (focus)="borrarExisteMail()" (focusout)="verificaEmail()"></ion-input>
         </ion-item>
         <ion-item *ngIf="myForm.get('email').errors && myForm.get('email').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('email').hasError('required')">Campo requerido</p>
           <p color="danger" ion-text *ngIf="myForm.get('email').hasError('email')">No tiene formato de email</p>
+        </ion-item>
+        <ion-item *ngIf="existeMail">
+          <p color="danger" ion-text>Correo electronico ya esta en uso</p>
         </ion-item>
         <br>
 
@@ -79,7 +82,7 @@
 
       </ion-list>
       <div padding>
-        <button ion-button block type="submit" [disabled]="!myForm.valid" class="botonRegistro">REGISTRARSE</button>
+        <button ion-button block type="submit" [disabled]="!myForm.valid || existeMail || existe" class="botonRegistro">REGISTRARSE</button>
       </div>
     </form>
   </div>

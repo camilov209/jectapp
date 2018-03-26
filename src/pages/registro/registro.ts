@@ -25,8 +25,9 @@ export class RegistroPage {
 	email:string = "";
 	clave:string = "";
 	notificacion:boolean;
-	loading: Loading;
 	existe:boolean = false;
+	existeMail:boolean = false;
+
 	
 
   constructor(	public navCtrl: NavController, 
@@ -39,16 +40,18 @@ export class RegistroPage {
   				private usuarioProvider:UsuarioProvider) {
 
   	this.myForm = this.createMyForm();
+  	this.existe = false;
 
   }
 
-  	createLoader(message: string = "Cargando...") { 
-     this.loading = this.loadingCtrl.create({
-       content: message
-     });
-   }
-
    saveData(){
+
+   	let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+
+    loader.present();
 
 	this.nombres 		= 	this.myForm.value.nombre;
 	this.usuario 		= 	this.myForm.value.usuario;
@@ -61,21 +64,25 @@ export class RegistroPage {
     this.email = this.email.toLowerCase();
 
     this.usuarioProvider.createUser(this.nombres, this.usuario, this.zona, this.email, this.clave, this.notificacion).then((respuesta)=>{
+    	
     	if (respuesta) {
 			let toast = this.toastCtrl.create({
-		      message: 'Usuario creado',
-		      duration: 3000
+		      message: 'Advertencia: Usuario creado',
+		      duration: 4000
 		    });
+
 		  toast.present();
 		  this.myForm.reset();
+		  loader.dismiss();
 		  this.navCtrl.setRoot(LoginPage);
 
     	}else{
     		let toast = this.toastCtrl.create({
-		      message: 'Usuario no disponible',
-		      duration: 3000
+		      message: 'Advertencia: Usuario no disponible',
+		      duration: 4000
 		    });
 		  toast.present();
+		  loader.dismiss();
 		  this.existe = true;
 
 
@@ -84,8 +91,40 @@ export class RegistroPage {
 
   }
 
+  verificaUsuario(){
+
+  	this.usuario 		= 	this.myForm.value.usuario;
+  	this.usuarioProvider.verifyUser(this.usuario).then((respuesta)=>{
+  		if (respuesta) {
+  			this.existe = true;
+  		}else{
+  			this.existe = false;
+  		}
+  	});
+
+  }
+
+  verificaEmail(){
+
+	this.email 			= 	this.myForm.value.email;
+  	this.usuarioProvider.verifyEmail(this.email).then((respuesta)=>{
+  		if (respuesta) {
+  			//Correo no disponible
+  			this.existeMail = true;
+  		}else{
+  			//Correo disponible
+  			this.existeMail = false;
+  		}
+  	})
+
+  }
+
   borrarExiste(){
   	this.existe = false;
+  }
+
+  borrarExisteMail(){
+  	this.existeMail = false;
   }
 
 private createMyForm(){
