@@ -9,14 +9,18 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class UsuarioProvider {
 
-	clave:string = null;
+	clave:any = null;
+  name:any = null;
+  username:any = null;
+  email:any = null;
+  password:any = null;
+  logueado:string = null;
 
   constructor(private afDB: AngularFireDatabase,
   			  private storage: Storage,
   			  private platform:Platform) {
 
   }
-
 
   createUser(nombres:string, usuario:string, zona:string, email:string, clave:string, notificacion:boolean){
 
@@ -94,26 +98,45 @@ export class UsuarioProvider {
   }
 
 
-
-
-  verificarUsuario(usuario:string, clave:string){
+  login(usuario:string, clave:string){
 
     usuario = usuario.toLowerCase();
   	clave = clave.toLowerCase();
 
+    let claveConfirmada;
+
   	let promesa = new Promise((resolve, reject)=>{
 
-  		this.afDB.list('/Usuarios/'+clave).valueChanges().subscribe(data=>{
+  		this.afDB.list('/users/'+usuario).valueChanges().subscribe(data=>{
 
-  			if (data.length === 0) {
-  				// DATOS INCORRECTOS
-  				resolve(false);
-  			}else{
-  				//DATOS CORRECTOS
-  				this.clave = clave;
-  				this.guardarStorage();
-  				resolve(true);
-  			}
+        console.log(data);
+
+  			if (data == null) {
+          //DATOS INCORRECTOS
+          resolve(false);
+        }else{
+
+          claveConfirmada = data[3];
+
+          if (claveConfirmada === clave) {
+            // USUARIO Y CLAVE CORRECTA
+            this.email = data[0];
+            this.name = data[1];
+            this.clave = data[3];
+            this.username = usuario;
+            this.logueado = "true";
+
+            this.guardarStorage();
+            resolve(true);
+
+          }else{
+
+            //DATOS INCORRECTOS
+            resolve(false);
+
+          }
+
+        }
 
   		});
 
@@ -133,13 +156,30 @@ export class UsuarioProvider {
   			if (this.platform.is("cordova")) {
   				// Dispositivo Movil...
   				this.storage.set("clave", this.clave);
+          this.storage.set("name", this.name);
+          this.storage.set("username", this.username);
+          this.storage.set("email", this.email);
+          this.storage.set("logueado", this.logueado);
+
+
   			}else{
   				// Escritorio
   				if (this.clave) {
   					// code...
   					localStorage.setItem("clave", this.clave);
+            localStorage.setItem("name", this.name);
+            localStorage.setItem("username", this.username);
+            localStorage.setItem("email", this.email);
+            localStorage.setItem("logueado", this.logueado);
+
+
   				}else{
   					localStorage.removeItem("clave");
+            localStorage.removeItem("name");
+            localStorage.removeItem("username");
+            localStorage.removeItem("email");
+            localStorage.removeItem("logueado");
+
   				}
   				
   			}
@@ -167,11 +207,37 @@ export class UsuarioProvider {
   						resolve();
   					});
 
+            this.storage.get("name").then(name=>{
+              this.name = name;
+              resolve();
+            });
+
+            this.storage.get("username").then(username=>{
+              this.username = username;
+              resolve();
+            });
+
+            this.storage.get("email").then(email=>{
+              this.email = email;
+              resolve();
+            });
+
+            this.storage.get("logueado").then(logueado=>{
+              this.logueado = logueado;
+              resolve();
+            });
+
   				});
 
   		}else{
   			// Escritorio
   			this.clave = localStorage.getItem("clave");
+        this.clave = localStorage.getItem("name");
+        this.clave = localStorage.getItem("username");
+        this.clave = localStorage.getItem("email");
+        this.clave = localStorage.getItem("logueado");
+
+
   			resolve();
   		}
 
@@ -184,6 +250,10 @@ export class UsuarioProvider {
   cerrarSession(){
 
     this.clave = null;
+    this.name = null;
+    this.username = null;
+    this.email = null;
+    this.logueado = null;
     this.guardarStorage();
 
   }
