@@ -25,10 +25,14 @@ import { AgmCoreModule } from '@agm/core';
 //Facebook
 import { Facebook } from '@ionic-native/facebook';
 
+//Google
+import { GooglePlus } from "@ionic-native/google-plus";
+
 //Paginas
 import { LoginPage } from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
 import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
+
 
 
 @NgModule({
@@ -66,7 +70,8 @@ import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
     AngularFireDatabase,
     Geolocation,
     UbicacionProvider,
-    Facebook
+    Facebook,
+    GooglePlus
   ]
 })
 export class AppModule {}
