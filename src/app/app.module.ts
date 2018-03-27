@@ -32,6 +32,9 @@ import { GooglePlus } from "@ionic-native/google-plus";
 import { LoginPage } from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
 import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
+import { TurismoPage } from '../pages/turismo/turismo';
+import { FavoritosPage } from '../pages/favoritos/favoritos';
+import { CompartirPage } from '../pages/compartir/compartir';
 
 
 
@@ -41,7 +44,10 @@ import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
     HomePage,
     LoginPage,
     RegistroPage,
-    OlvidoPassPage
+    OlvidoPassPage,
+    TurismoPage,
+    FavoritosPage,
+    CompartirPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +66,10 @@ import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
     HomePage,
     LoginPage,
     RegistroPage,
-    OlvidoPassPage
+    OlvidoPassPage,
+    TurismoPage,
+    FavoritosPage,
+    CompartirPage
   ],
   providers: [
     StatusBar,

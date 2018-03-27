@@ -4,6 +4,8 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 //Paginas
 import { RegistroPage } from '../registro/registro';
 import { OlvidoPassPage } from '../olvido-pass/olvido-pass';
+import { HomePage } from '../home/home';
+
 import { Facebook } from "@ionic-native/facebook";
 import firebase from 'firebase';
 import { GooglePlus } from "@ionic-native/google-plus";
@@ -20,6 +22,7 @@ export class LoginPage {
 
     usuario: string = "";
     clave: string = "";
+    homePage = HomePage;
 
   constructor(	public navCtrl: NavController, 
   				      public navParams: NavParams,
@@ -32,17 +35,14 @@ export class LoginPage {
     ingresar() {
 
       this.usuarioProvider.login(this.usuario, this.clave).then((respuesta)=>{
-      if (respuesta) {
-        // code...
+      if (respuesta === false) {
+          let toast = this.toastCtrl.create({
+            message: 'Advertencia: Datos Incorrectos',
+            duration: 4000
+          });
+        toast.present();
       }else{
-
-        let toast = this.toastCtrl.create({
-          message: 'Advertencia: Datos Incorrectos',
-          duration: 4000
-        });
-
-      toast.present();
-
+        this.navCtrl.setRoot(HomePage);
       }
     });
 

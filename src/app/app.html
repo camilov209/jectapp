@@ -1,1 +1,23 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="NAV">
+	<ion-content>	
+		<ion-list color="danger">
+			<button ion-item *ngFor="let pageUs of pagesUsuario" (click)="goToPage(pageUs.Component)" menuClose>
+				<ion-icon item-left name="{{pageUs.icon}}"></ion-icon>
+				{{pageUs.titulo}}
+			</button>
+
+			<button ion-item *ngFor="let pageAdm of pagesAdmin" (click)="goToPage(pageAdm.Component)" menuClose>
+				<ion-icon item-left name="{{pageAdm.icon}}"></ion-icon>
+				{{pageAdm.titulo}}
+			</button>
+
+			<button ion-item menuClose
+  				(click)="salir()">
+  				<ion-icon item-left name="log-out"></ion-icon>
+			CERRAR SESIÓN
+  			</button>
+		</ion-list>	
+	</ion-content>
+</ion-menu>
+
+<ion-nav #NAV [root]="rootPage" color="azulJectapp"></ion-nav>

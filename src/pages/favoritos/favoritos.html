@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="azulJectapp">
   	<ion-buttons end>
-        <button ion-button icon-only>
+        <button ion-button icon-only (click)="home()">
           <img src="assets/recursos/jectapp-logo-esquina.png" />
         </button>
     </ion-buttons>
@@ -9,19 +9,12 @@
 		<ion-icon name="menu"></ion-icon>
   	</button>
     <ion-title>
-      Home
+      Favoritos
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   
-  	<agm-map [latitude]="usuario.lat" [longitude]="usuario.lng" [zoom]="17">
-	  <agm-marker 
-	  				[latitude]="usuario.lat" 
-	  				[longitude]="usuario.lng">
-	  	
-	  </agm-marker>
-	</agm-map>
-
+  	
 </ion-content>

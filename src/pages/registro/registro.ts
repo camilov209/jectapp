@@ -24,7 +24,7 @@ export class RegistroPage {
 	zona:string = "";
 	email:string = "";
 	clave:string = "";
-	notificacion:boolean;
+  notificacion:boolean;
 	existe:boolean = false;
 	existeMail:boolean = false;
 
@@ -62,6 +62,8 @@ export class RegistroPage {
 
     this.usuario = this.usuario.toLowerCase();
     this.email = this.email.toLowerCase();
+    this.usuario = this.usuario.trim();
+    console.log(this.usuario);
 
     this.usuarioProvider.createUser(this.nombres, this.usuario, this.zona, this.email, this.clave, this.notificacion).then((respuesta)=>{
     	
@@ -138,5 +140,6 @@ private createMyForm(){
 	      notificacion:[true],
     });
   }
+
 
 }

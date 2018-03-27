@@ -14,12 +14,12 @@ export class UbicacionProvider {
   				private afDB: AngularFireDatabase,
   				private _up:UsuarioProvider) {
 
-  	if (!this._up.clave) {
-  		// code...
+  	if (!this._up.username) {
   		return;
   	}
 
-  	this.usuario = this.afDB.object('/Usuarios/'+this._up.clave);
+  	this.usuario = this.afDB.object('/users/'+this._up.username);
+  	console.log(this._up.username);
     
   }
 
@@ -30,7 +30,7 @@ export class UbicacionProvider {
 			 // data can be a set of coordinates, or an error (if an error occurred).
 			 // data.coords.latitude
 			 // data.coords.longitude
-			 if (!this._up.clave) {
+			 if (!this._up.username) {
 			 	// code...
 			 	return;
 			 }

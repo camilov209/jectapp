@@ -3,6 +3,9 @@ import { NavController } from 'ionic-angular';
 import { UbicacionProvider } from '../../providers/ubicacion/ubicacion';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 
+//Paginas
+import { LoginPage } from '../login/login';
+
 
 @Component({
   selector: 'page-home',
@@ -21,12 +24,6 @@ export class HomePage {
   		this.usuario = data;
   	});
 
-  }
-
-  salir(){
-    this._up.cerrarSession();
-    this._ubicacion.detenerLocalizacion();
-    this.navCtrl.setRoot("LoginPage");
   }
 
 }

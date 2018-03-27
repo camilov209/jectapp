@@ -36,6 +36,8 @@ export class UsuarioProvider {
                email:email,
                password:clave,
                notificacion: notificacion,
+               lat:'2.4464798',
+               lng:'-76.6008221'
              };
 
               this.afDB.object(`/users/${usuario}`).update(dataUser);
@@ -109,14 +111,12 @@ export class UsuarioProvider {
 
   		this.afDB.list('/users/'+usuario).valueChanges().subscribe(data=>{
 
-        console.log(data);
-
   			if (data == null) {
           //DATOS INCORRECTOS
           resolve(false);
         }else{
 
-          claveConfirmada = data[3];
+          claveConfirmada = data[5];
 
           if (claveConfirmada === clave) {
             // USUARIO Y CLAVE CORRECTA
@@ -192,7 +192,7 @@ export class UsuarioProvider {
   }
 
 
-  cargarStorage(){
+  cargarStorage(){  
 
   	let promesa = new Promise((resolve, reject)=>{
 
@@ -203,40 +203,45 @@ export class UsuarioProvider {
 
   					//Leer del storage
   					this.storage.get("clave").then(clave=>{
-  						this.clave = clave;
-  						resolve();
+              if(clave){
+                      this.clave = clave;
+                    }
   					});
 
             this.storage.get("name").then(name=>{
-              this.name = name;
-              resolve();
+              if (name) {
+                this.name = name;
+              }
             });
 
             this.storage.get("username").then(username=>{
-              this.username = username;
-              resolve();
+              if (username) {
+                this.username = username;
+              }
             });
 
             this.storage.get("email").then(email=>{
-              this.email = email;
-              resolve();
+              if (email) {
+                this.email = email;
+              }
             });
 
             this.storage.get("logueado").then(logueado=>{
-              this.logueado = logueado;
+              if (logueado) {
+                this.logueado = logueado;
+              }
               resolve();
             });
 
-  				});
+  				})
 
   		}else{
   			// Escritorio
   			this.clave = localStorage.getItem("clave");
-        this.clave = localStorage.getItem("name");
-        this.clave = localStorage.getItem("username");
-        this.clave = localStorage.getItem("email");
-        this.clave = localStorage.getItem("logueado");
-
+        this.name = localStorage.getItem("name");
+        this.username = localStorage.getItem("username");
+        this.email = localStorage.getItem("email");
+        this.logueado = localStorage.getItem("logueado");
 
   			resolve();
   		}
@@ -249,12 +254,19 @@ export class UsuarioProvider {
 
   cerrarSession(){
 
-    this.clave = null;
-    this.name = null;
-    this.username = null;
-    this.email = null;
-    this.logueado = null;
-    this.guardarStorage();
+    let promesa = new Promise ((resolve, reject)=>{
+
+      this.clave = null;
+      this.name = null;
+      this.username = null;
+      this.email = null;
+      this.logueado = 'false';
+      this.guardarStorage();
+      resolve();
+
+    });
+
+    return promesa;   
 
   }
 
