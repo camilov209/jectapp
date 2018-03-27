@@ -4,9 +4,9 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 //Paginas
 import { RegistroPage } from '../registro/registro';
 import { OlvidoPassPage } from '../olvido-pass/olvido-pass';
-import {Facebook} from "@ionic-native/facebook";
+import { Facebook } from "@ionic-native/facebook";
 import firebase from 'firebase';
-import {GooglePlus} from "@ionic-native/google-plus";
+import { GooglePlus } from "@ionic-native/google-plus";
 
 //Servicio Usuario
 import { UsuarioProvider } from '../../providers/usuario/usuario';
@@ -21,33 +21,17 @@ export class LoginPage {
     usuario: string = "";
     clave: string = "";
 
-<<<<<<< HEAD
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                public facebook: Facebook,
-                public googlePlus: GooglePlus) {
-    }
-=======
   constructor(	public navCtrl: NavController, 
   				      public navParams: NavParams,
                 private usuarioProvider:UsuarioProvider,
-                private toastCtrl:ToastController ) {
+                private toastCtrl:ToastController,
+                public facebook: Facebook,
+                public googlePlus: GooglePlus ) {
   }
->>>>>>> JuanManuel
 
     ingresar() {
-    }
 
-<<<<<<< HEAD
-    crearCuenta() {
-        this.navCtrl.push(RegistroPage);
-    }
-
-    resetPass() {
-        this.navCtrl.push(OlvidoPassPage);
-    }
-=======
-    this.usuarioProvider.login(this.usuario, this.clave).then((respuesta)=>{
+      this.usuarioProvider.login(this.usuario, this.clave).then((respuesta)=>{
       if (respuesta) {
         // code...
       }else{
@@ -61,7 +45,18 @@ export class LoginPage {
 
       }
     });
->>>>>>> JuanManuel
+
+    }
+
+    crearCuenta() {
+        this.navCtrl.push(RegistroPage);
+    }
+
+    resetPass() {
+        this.navCtrl.push(OlvidoPassPage);
+    }
+
+    
 
     fbLogin(){
       this.facebook.login(['email']).then(res=>{

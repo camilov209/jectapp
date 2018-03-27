@@ -17,8 +17,8 @@ export class UsuarioProvider {
   logueado:string = null;
 
   constructor(private afDB: AngularFireDatabase,
-  			  private storage: Storage,
-  			  private platform:Platform) {
+      			  private storage: Storage,
+      			  private platform:Platform) {
 
   }
 
