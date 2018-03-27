@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 //Paginas
 import { RegistroPage } from '../registro/registro';
@@ -7,6 +7,9 @@ import { OlvidoPassPage } from '../olvido-pass/olvido-pass';
 import {Facebook} from "@ionic-native/facebook";
 import firebase from 'firebase';
 import {GooglePlus} from "@ionic-native/google-plus";
+
+//Servicio Usuario
+import { UsuarioProvider } from '../../providers/usuario/usuario';
 
 
 @Component({
@@ -18,15 +21,24 @@ export class LoginPage {
     usuario: string = "";
     clave: string = "";
 
+<<<<<<< HEAD
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 public facebook: Facebook,
                 public googlePlus: GooglePlus) {
     }
+=======
+  constructor(	public navCtrl: NavController, 
+  				      public navParams: NavParams,
+                private usuarioProvider:UsuarioProvider,
+                private toastCtrl:ToastController ) {
+  }
+>>>>>>> JuanManuel
 
     ingresar() {
     }
 
+<<<<<<< HEAD
     crearCuenta() {
         this.navCtrl.push(RegistroPage);
     }
@@ -34,6 +46,22 @@ export class LoginPage {
     resetPass() {
         this.navCtrl.push(OlvidoPassPage);
     }
+=======
+    this.usuarioProvider.login(this.usuario, this.clave).then((respuesta)=>{
+      if (respuesta) {
+        // code...
+      }else{
+
+        let toast = this.toastCtrl.create({
+          message: 'Advertencia: Datos Incorrectos',
+          duration: 4000
+        });
+
+      toast.present();
+
+      }
+    });
+>>>>>>> JuanManuel
 
     fbLogin(){
       this.facebook.login(['email']).then(res=>{

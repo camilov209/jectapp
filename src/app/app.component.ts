@@ -26,11 +26,11 @@ export class MyApp {
 
     	this._up.cargarStorage().then(()=>{
 
-    		if (this._up.clave) {
+    		if (this._up.logueado == null) {
     			// code...
-    			this.rootPage = HomePage;
+    			this.rootPage = LoginPage;
     		}else{
-    			this.rootPage =LoginPage;
+    			this.rootPage =HomePage;
     		}
 
     		statusBar.styleDefault();
