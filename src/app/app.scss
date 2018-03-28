@@ -14,3 +14,35 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.myBg{
+   background-color:#1F365B;
+   color: white;
+ }
+
+ .datos1{
+ 	position: relative;
+ }
+
+ .datos2{
+ 	position: absolute;
+ 	left: 110px;
+ 	top: 50px;
+ 	color: white;
+ 	font-size:0.7em;
+ }
+
+ .datos3{
+ 	position: relative;
+ }
+
+ .datos4{
+ 	position: relative; 
+ 	left: 25px;
+ 	top: 30px;
+ }
+
+.item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
+border-color: white;
+background-color: #119EC8;
+}

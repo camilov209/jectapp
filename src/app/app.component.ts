@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController  } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -31,7 +31,8 @@ export class MyApp {
         				statusBar: StatusBar, 
         				splashScreen: SplashScreen,
         				private _up:UsuarioProvider,
-                private _ubicacion:UbicacionProvider,) {
+                private _ubicacion:UbicacionProvider,
+                private alertCtrl: AlertController) {
 
     platform.ready().then(() => {
 
@@ -48,7 +49,7 @@ export class MyApp {
 
       this._up.cargarStorage().then(()=>{
 
-         if(this._up.logueado === "true"){
+         if(this._up.logueado){
             this.rootPage = HomePage;
           }else{
             this.rootPage = LoginPage;
@@ -67,12 +68,34 @@ export class MyApp {
   }
 
   salir(){
-    this._up.cerrarSession().then(()=>{
-      this._ubicacion.detenerLocalizacion();
-      this.nav.setRoot(LoginPage);
+
+    let confirm = this.alertCtrl.create({
+      title: 'Advertencia',
+      message: '¿Seguro que deseas salir?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+              this._up.cerrarSession().then(()=>{
+              this._up.cargarStorage();
+              this._ubicacion.detenerLocalizacion();
+              this.nav.setRoot(LoginPage);
+            });
+          }
+        }
+      ]
     });
+
+    confirm.present();
     
   }
+
+    
 
 }
 

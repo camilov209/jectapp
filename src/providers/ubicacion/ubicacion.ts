@@ -8,37 +8,28 @@ import { UsuarioProvider } from '../../providers/usuario/usuario';
 export class UbicacionProvider {
 
 	 usuario: AngularFireObject<any>;
+	 user:string = null;
 	 private watch:any;
 
   constructor(	private geolocation:Geolocation,
   				private afDB: AngularFireDatabase,
   				private _up:UsuarioProvider) {
 
-  	if (!this._up.username) {
-  		return;
   	}
 
-  	this.usuario = this.afDB.object('/users/'+this._up.username);
-  	console.log(this._up.username);
-    
-  }
+  iniciarLocalizacion(username:string){
 
-  iniciarLocalizacion(){
+    this.usuario = this.afDB.object('/users/'+username);
 
   	this.watch = this.geolocation.watchPosition()
-		.subscribe((data) => {
-			 // data can be a set of coordinates, or an error (if an error occurred).
-			 // data.coords.latitude
-			 // data.coords.longitude
-			 if (!this._up.username) {
-			 	// code...
-			 	return;
-			 }
+		.subscribe((data) => {		
 
-			 this.usuario.update({
-			 	lat: data.coords.latitude,
-			 	lng: data.coords.longitude
-			 });
+			 	console.log(data);
+
+			 	this.usuario.update({
+			 		lat:data.coords.latitude,
+			 		lng:data.coords.longitude
+			 	});
 			 
 		});
 

@@ -15,15 +15,14 @@ export class HomePage {
 
 	usuario:any={};
 
-  constructor(public navCtrl: NavController,
-  				    private _ubicacion:UbicacionProvider,
-              private _up:UsuarioProvider) {
+  constructor(	public navCtrl: NavController,
+  				private _ubicacion:UbicacionProvider,
+              	private _up:UsuarioProvider) {
 
-  	this._ubicacion.iniciarLocalizacion();
-  	this._ubicacion.usuario.valueChanges().subscribe((data)=>{
-  		this.usuario = data;
-  	});
-
+    this._ubicacion.iniciarLocalizacion(this._up.username);
+    this._ubicacion.usuario.valueChanges().subscribe(data=>{
+    	this.usuario = data;
+    });
   }
 
 }

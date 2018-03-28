@@ -9,11 +9,13 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class UsuarioProvider {
 
-	clave:any = null;
-  name:any = null;
-  username:any = null;
-  email:any = null;
-  password:any = null;
+  usuario:any = {};
+
+	clave:string = null;
+  name:string = null;
+  username:string = null;
+  email:string = null;
+  password:string = null;
   logueado:string = null;
 
   constructor(private afDB: AngularFireDatabase,
@@ -121,11 +123,11 @@ export class UsuarioProvider {
           if (claveConfirmada === clave) {
             // USUARIO Y CLAVE CORRECTA
             this.email = data[0];
-            this.name = data[1];
-            this.clave = data[3];
+            this.name = data[3];
+            this.clave = data[5];
             this.username = usuario;
             this.logueado = "true";
-
+            this.usuario = data;
             this.guardarStorage();
             resolve(true);
 
@@ -150,8 +152,6 @@ export class UsuarioProvider {
 
   guardarStorage(){
 
-
-  		let promesa = new Promise((resolve, reject)=>{
 
   			if (this.platform.is("cordova")) {
   				// Dispositivo Movil...
@@ -184,9 +184,7 @@ export class UsuarioProvider {
   				
   			}
 
-  		});
 
-  		return promesa;
 
 
   }
@@ -243,8 +241,9 @@ export class UsuarioProvider {
         this.email = localStorage.getItem("email");
         this.logueado = localStorage.getItem("logueado");
 
-  			resolve();
+  			
   		}
+      resolve();
 
   	});
 
@@ -260,10 +259,9 @@ export class UsuarioProvider {
       this.name = null;
       this.username = null;
       this.email = null;
-      this.logueado = 'false';
+      this.logueado = null;
       this.guardarStorage();
       resolve();
-
     });
 
     return promesa;   

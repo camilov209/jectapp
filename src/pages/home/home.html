@@ -15,12 +15,12 @@
 </ion-header>
 
 <ion-content>
-  
-  	<agm-map [latitude]="usuario.lat" [longitude]="usuario.lng" [zoom]="17">
+
+  	<agm-map [latitude]="usuario.lat" [longitude]="usuario.lng" [zoom]="15">
 	  <agm-marker 
 	  				[latitude]="usuario.lat" 
-	  				[longitude]="usuario.lng">
-	  	
+	  				[longitude]="usuario.lng"
+            iconUrl="assets/recursos/usuario.png">
 	  </agm-marker>
 	</agm-map>
 

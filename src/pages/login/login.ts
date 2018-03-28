@@ -43,6 +43,7 @@ export class LoginPage {
         toast.present();
       }else{
         this.navCtrl.setRoot(HomePage);
+        this.usuarioProvider.cargarStorage();
       }
     });
 
@@ -55,8 +56,6 @@ export class LoginPage {
     resetPass() {
         this.navCtrl.push(OlvidoPassPage);
     }
-
-    
 
     fbLogin(){
       this.facebook.login(['email']).then(res=>{

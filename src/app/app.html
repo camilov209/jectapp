@@ -1,23 +1,42 @@
 <ion-menu [content]="NAV">
-	<ion-content>	
-		<ion-list color="danger">
-			<button ion-item *ngFor="let pageUs of pagesUsuario" (click)="goToPage(pageUs.Component)" menuClose>
-				<ion-icon item-left name="{{pageUs.icon}}"></ion-icon>
-				{{pageUs.titulo}}
-			</button>
+	<ion-content class="myBg">
+		
+		<div class="datos1">
+			<div class="datos2">
+		  		<p>{{_up.name}}<br>{{_up.email}}</p>
+		  	</div>
+		</div>
 
-			<button ion-item *ngFor="let pageAdm of pagesAdmin" (click)="goToPage(pageAdm.Component)" menuClose>
-				<ion-icon item-left name="{{pageAdm.icon}}"></ion-icon>
-				{{pageAdm.titulo}}
-			</button>
+		<div class="datos3">
+			<div class="datos4">
+				<img src="assets/recursos/usuario-logo.png" />
+			</div>	  
+		</div>
 
-			<button ion-item menuClose
-  				(click)="salir()">
-  				<ion-icon item-left name="log-out"></ion-icon>
-			CERRAR SESIÓN
-  			</button>
-		</ion-list>	
+		<br>
+		<br>
+		<br>
+		
+		<div class="color">
+			<ion-list >
+				<button ion-item *ngFor="let pageUs of pagesUsuario" (click)="goToPage(pageUs.Component)" menuClose class="myBg">
+					<ion-icon item-left name="{{pageUs.icon}}"></ion-icon>
+					{{pageUs.titulo}}
+				</button>
+
+				<button ion-item *ngFor="let pageAdm of pagesAdmin" (click)="goToPage(pageAdm.Component)" menuClose class="myBg">
+					<ion-icon item-left name="{{pageAdm.icon}}"></ion-icon>
+					{{pageAdm.titulo}}
+				</button>
+
+				<button ion-item menuClose
+	  				(click)="salir()" class="myBg">
+	  				<ion-icon item-left name="log-out"></ion-icon>
+				CERRAR SESIÓN
+	  			</button>
+			</ion-list>	
+		</div>	
 	</ion-content>
 </ion-menu>
 
-<ion-nav #NAV [root]="rootPage" color="azulJectapp"></ion-nav>
+<ion-nav #NAV [root]="rootPage"></ion-nav>
