@@ -11,11 +11,11 @@ export class UsuarioProvider {
 
   usuario:any = {};
 
-	clave:string = null;
-  name:string = null;
-  username:string = null;
-  email:string = null;
-  password:string = null;
+	clave:any = null;
+  name:any = null;
+  username:any = null;
+  email:any = null;
+  password:any = null;
   logueado:string = null;
 
   constructor(private afDB: AngularFireDatabase,
