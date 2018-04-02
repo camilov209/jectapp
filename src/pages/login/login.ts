@@ -61,9 +61,16 @@ export class LoginPage {
       this.facebook.login(['email']).then(res=>{
           const fc = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
           firebase.auth().signInWithCredential(fc).then(fs =>{
-              alert("firebase sec");
+              this.usuarioProvider.createUserRedes(fs.displayName, fs.email, fs.uid)
+          .then(()=>{
+                this.navCtrl.setRoot(HomePage);
+                this.usuarioProvider.cargarStorage();
+              }).catch(()=>{
+                  alert("Errir");
+              })
           }).catch(ferr => {
-              alert("firebase error ");
+              alert("Error al iniciar sesión");
+
           })
 
       }).catch(err=>{

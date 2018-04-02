@@ -39,7 +39,8 @@ export class UsuarioProvider {
                password:clave,
                notificacion: notificacion,
                lat:'2.4464798',
-               lng:'-76.6008221'
+               lng:'-76.6008221',
+               zona:zona
              };
 
               this.afDB.object(`/users/${usuario}`).update(dataUser);
@@ -57,6 +58,38 @@ export class UsuarioProvider {
     return promesa;
 
   }
+
+
+    createUserRedes(nombres:string, email:string, clave:string){
+
+        let promesa = new Promise ((resolve, reject)=>{
+            let dataUser = {
+                name: nombres,
+                username: '',
+                email: email,
+                password: clave,
+                notificacion: true,
+                lat: '2.4464798',
+                lng: '-76.6008221',
+                zona: ''
+            };
+
+            this.afDB.object(`/users/${clave}`).update(dataUser);
+            this.logueado = "true";
+            this.email = email;
+            this.clave = clave;
+            this.username = clave;
+            this.name = nombres;
+
+            this.guardarStorage();
+
+            resolve();
+
+        });
+        return promesa;
+
+    }
+
 
   verifyUser(usuario:string){
 

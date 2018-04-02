@@ -24,7 +24,7 @@ export class RegistroPage {
 	zona:string = "";
 	email:string = "";
 	clave:string = "";
-  notificacion:boolean;
+  	notificacion:boolean;
 	existe:boolean = false;
 	existeMail:boolean = false;
 
