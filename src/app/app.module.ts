@@ -35,6 +35,8 @@ import { OlvidoPassPage } from '../pages/olvido-pass/olvido-pass';
 import { TurismoPage } from '../pages/turismo/turismo';
 import { FavoritosPage } from '../pages/favoritos/favoritos';
 import { CompartirPage } from '../pages/compartir/compartir';
+import { OrigenDestinoPage } from '../pages/origen-destino/origen-destino';
+
 
 
 
@@ -47,7 +49,8 @@ import { CompartirPage } from '../pages/compartir/compartir';
     OlvidoPassPage,
     TurismoPage,
     FavoritosPage,
-    CompartirPage
+    CompartirPage,
+    OrigenDestinoPage
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ import { CompartirPage } from '../pages/compartir/compartir';
     OlvidoPassPage,
     TurismoPage,
     FavoritosPage,
-    CompartirPage
+    CompartirPage,
+    OrigenDestinoPage
   ],
   providers: [
     StatusBar,

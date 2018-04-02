@@ -15,13 +15,19 @@
 </ion-header>
 
 <ion-content>
+       
+  <agm-map [latitude]="usuario.lat" [longitude]="usuario.lng" [zoom]="15" class="mapa">
+      <agm-marker 
+                      [latitude]="usuario.lat" 
+                      [longitude]="usuario.lng"
+                      iconUrl="assets/recursos/usuario.png">
+      </agm-marker>
+  </agm-map>
 
-  	<agm-map [latitude]="usuario.lat" [longitude]="usuario.lng" [zoom]="15">
-	  <agm-marker 
-	  				[latitude]="usuario.lat" 
-	  				[longitude]="usuario.lng"
-            iconUrl="assets/recursos/usuario.png">
-	  </agm-marker>
-	</agm-map>
+        <div class="datos4" align="center">
+           <button ion-button color="blanco" round class="btnGo" (click)="abrirPage()">¿A donde quieres ir?</button>
+        </div>    
+
+  	
 
 </ion-content>

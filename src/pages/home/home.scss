@@ -1,7 +1,25 @@
 page-home {
 
-	agm-map {
+agm-map {
 	  height: 100% !important;
-	}
+}
+
+
+.mapa{
+ 	position: relative;
+}
+
+
+.datos4{
+	text-align: center;
+ 	position: absolute; 
+ 	color: #1F365B;
+ 	display: inline-block;
+ 	padding-left: 20%;
+}
+
+
+
+
 
 }
