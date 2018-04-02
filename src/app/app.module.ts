@@ -60,7 +60,8 @@ import { OrigenDestinoPage } from '../pages/origen-destino/origen-destino';
     AngularFireAuthModule,
     IonicStorageModule.forRoot(),
       AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyDn71L32gHGhwYwFNlhWw4FElZWjlZpWcQ'
+        apiKey: 'AIzaSyDn71L32gHGhwYwFNlhWw4FElZWjlZpWcQ',
+        libraries: ["places"]
       })
   ],
   bootstrap: [IonicApp],

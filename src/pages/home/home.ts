@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController  } from 'ionic-angular';
+
+//Servicios
 import { UbicacionProvider } from '../../providers/ubicacion/ubicacion';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 
@@ -21,6 +23,7 @@ export class HomePage {
   				      private _ubicacion:UbicacionProvider,
               	private _up:UsuarioProvider,
                 private modalCtrl: ModalController) {
+
 
     this._ubicacion.iniciarLocalizacion(this._up.username);
     this._ubicacion.usuario.valueChanges().subscribe(data=>{
