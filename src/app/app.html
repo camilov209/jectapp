@@ -1,22 +1,17 @@
 <ion-menu [content]="NAV">
+
+	<ion-header>
+		<div>
+			<img height="145" width="100%">
+			<div style="position: absolute; top: 0; padding-top: 20px; padding-left: 15px;">
+				<img src="assets/recursos/usuario-logo.png" width="60" height="60" class="sideMenuAvatar" (click)="goToPage(pagePerfil)" menuClose>
+				<span class="sideMenuWelcome"><b>{{this._up.user.nombre}} </b></span>
+				<span class="sideMenuProfile">{{this._up.user.email}}</span>
+			</div>
+		</div>
+	</ion-header>
+
 	<ion-content class="myBg">
-		
-		<div class="datos1">
-			<div class="datos2">
-		  		<p>{{_up.name}}<br>{{_up.email}}</p>
-		  	</div>
-		</div>
-
-		<div class="datos3">
-			<div class="datos4">
-				<img src="assets/recursos/usuario-logo.png" />
-			</div>	  
-		</div>
-
-		<br>
-		<br>
-		<br>
-		
 		<div class="color">
 			<ion-list >
 				<button ion-item *ngFor="let pageUs of pagesUsuario" (click)="goToPage(pageUs.Component)" menuClose class="myBg">

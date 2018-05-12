@@ -95,7 +95,7 @@ export class RegistroPage {
 
   verificaUsuario(){
 
-  	this.usuario 		= 	this.myForm.value.usuario;
+  	this.usuario = this.myForm.value.usuario;
   	this.usuarioProvider.verifyUser(this.usuario).then((respuesta)=>{
   		if (respuesta) {
   			this.existe = true;
@@ -108,7 +108,7 @@ export class RegistroPage {
 
   verificaEmail(){
 
-	this.email 			= 	this.myForm.value.email;
+	this.email = this.myForm.value.email;
   	this.usuarioProvider.verifyEmail(this.email).then((respuesta)=>{
   		if (respuesta) {
   			//Correo no disponible

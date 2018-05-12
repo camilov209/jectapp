@@ -9,20 +9,38 @@
 		<ion-icon name="menu"></ion-icon>
   	</button>
     <ion-title>
-      Home
+      Inicio
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-       
-  <agm-map [latitude]="usuario.lat" [longitude]="usuario.lng" [zoom]="15" class="mapa">
-      <agm-marker 
-                      [latitude]="usuario.lat" 
-                      [longitude]="usuario.lng"
-                      iconUrl="assets/recursos/usuario.png">
-      </agm-marker>
-  </agm-map>
+    <agm-map
+            [latitude]="lat" [longitude]="lng"
+            [zoom]="16"
+            [styles]="styles"
+            [disableDefaultUI]="true">
+
+        <agm-marker
+                *ngFor="let m of markers; let i = index"
+                (markerClick)="clickedMarker(m.label, i)"
+                [latitude]="m.lat"
+                [longitude]="m.lng"
+                [iconUrl]="m.icon"
+                [markerDraggable]="m.draggable"
+                (dragEnd)="markerDragEnd(m, $event)" >
+
+            <agm-info-window *ngIf="m.label !== 'position'">
+                <p class="titleInfo"><b>{{m.label}}</b></p>
+                <div class="center">
+                    <img *ngFor="let i of m.img" src="{{i}}" height="60" width="70" style="padding: 2px" imageViewer>
+                </div>
+                <p>{{m.description}}</p>
+                <button ion-button block color="secondary">Visitar Sitio Turistico</button>
+            </agm-info-window>
+
+        </agm-marker>
+    </agm-map>
 
         <div class="datos4" align="center">
            <button ion-button color="blanco" round class="btnGo" (click)="abrirPage()">¿A donde quieres ir?</button>

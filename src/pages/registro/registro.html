@@ -11,22 +11,18 @@
 </ion-header>
 
 <ion-content>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <img src="assets/recursos/camara.png" class="Camara" />
 
   <div class="datosUsuario">
-    <form [formGroup]="myForm" (ngSubmit)="saveData()">
-      <ion-list >
 
+    <div padding-bottom="10px">
+        <h5><b>Por favor llena los siguientes datos para la crear una cuenta en Jectapp.</b></h5>
+    </div>
+
+    <form [formGroup]="myForm" (ngSubmit)="saveData()">
+      <ion-list>
         <ion-item class="fondoInput">
-          <ion-input formControlName="nombre" type="text" placeholder="Nombres" class="inputColor"></ion-input>
+          <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Nombres</ion-label>
+          <ion-input formControlName="nombre" type="text" class="inputColor"></ion-input>
         </ion-item>
         <ion-item *ngIf="myForm.get('nombre').errors && myForm.get('nombre').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('nombre').hasError('required')">Campo requerido</p>
@@ -34,9 +30,9 @@
         </ion-item>
         <br>
 
-
         <ion-item class="fondoInput">
-          <ion-input formControlName="usuario" type="text" placeholder="Usuario" class="inputColor" (focus)="borrarExiste()" (focusout)="verificaUsuario()"></ion-input>
+          <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Usuario</ion-label>
+          <ion-input formControlName="usuario" type="text" class="inputColor" (focus)="borrarExiste()" (focusout)="verificaUsuario()"></ion-input>
         </ion-item>
          <ion-item *ngIf="myForm.get('usuario').errors && myForm.get('usuario').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('usuario').hasError('required')">Campo requerido</p>
@@ -50,7 +46,8 @@
 
 
         <ion-item class="fondoInput">
-          <ion-input formControlName="zona" type="text" placeholder="Zona de regsitro" class="inputColor"></ion-input>
+          <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Zona de Registro</ion-label>
+          <ion-input formControlName="zona" type="text" class="inputColor"></ion-input>
         </ion-item>
         <ion-item *ngIf="myForm.get('zona').errors && myForm.get('zona').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('zona').hasError('required')">Campo requerido</p>
@@ -59,7 +56,8 @@
         <br>
 
         <ion-item class="fondoInput">
-          <ion-input formControlName="email" type="email" placeholder="Email" class="inputColor" (focus)="borrarExisteMail()" (focusout)="verificaEmail()"></ion-input>
+          <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Email</ion-label>
+          <ion-input formControlName="email" type="email" class="inputColor" (focus)="borrarExisteMail()" (focusout)="verificaEmail()"></ion-input>
         </ion-item>
         <ion-item *ngIf="myForm.get('email').errors && myForm.get('email').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('email').hasError('required')">Campo requerido</p>
@@ -71,7 +69,8 @@
         <br>
 
         <ion-item class="fondoInput">
-          <ion-input formControlName="password" type="password" placeholder="Contraseña" class="inputColor"></ion-input>
+          <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Contraseña</ion-label>
+          <ion-input formControlName="password" type="password" class="inputColor"></ion-input>
         </ion-item>
         <ion-item *ngIf="myForm.get('password').errors && myForm.get('password').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('password').hasError('required')">Campo requerido</p>

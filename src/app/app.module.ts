@@ -14,6 +14,9 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { firebaseConfig } from '../config/firebase.config';
 
+//Ionic Image
+import {IonicImageViewerModule} from "ionic-img-viewer";
+
 //Storage
 import { IonicStorageModule } from '@ionic/storage';
 
@@ -36,6 +39,11 @@ import { TurismoPage } from '../pages/turismo/turismo';
 import { FavoritosPage } from '../pages/favoritos/favoritos';
 import { CompartirPage } from '../pages/compartir/compartir';
 import { OrigenDestinoPage } from '../pages/origen-destino/origen-destino';
+import {PerfilPage} from "../pages/perfil/perfil";
+
+//HttpClient
+import { HttpClientModule } from "@angular/common/http";
+
 
 
 
@@ -50,7 +58,8 @@ import { OrigenDestinoPage } from '../pages/origen-destino/origen-destino';
     TurismoPage,
     FavoritosPage,
     CompartirPage,
-    OrigenDestinoPage
+    OrigenDestinoPage,
+    PerfilPage
   ],
   imports: [
     BrowserModule,
@@ -58,6 +67,8 @@ import { OrigenDestinoPage } from '../pages/origen-destino/origen-destino';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    IonicImageViewerModule,
+      HttpClientModule,
     IonicStorageModule.forRoot(),
       AgmCoreModule.forRoot({
         apiKey: 'AIzaSyDn71L32gHGhwYwFNlhWw4FElZWjlZpWcQ',
@@ -74,7 +85,8 @@ import { OrigenDestinoPage } from '../pages/origen-destino/origen-destino';
     TurismoPage,
     FavoritosPage,
     CompartirPage,
-    OrigenDestinoPage
+    OrigenDestinoPage,
+    PerfilPage
   ],
   providers: [
     StatusBar,

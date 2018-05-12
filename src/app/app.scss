@@ -42,6 +42,33 @@
  	top: 30px;
  }
 
+.sideMenuAvatar{
+  border-radius: 100%;
+}
+
+.sideMenuWelcome {
+  position: absolute;
+  padding-top: 10px;
+  color: #ffffff;
+  width: 250px;
+  font-size: 14px;
+}
+
+.sideMenuProfile {
+  position: absolute;
+  padding-top: 25px;
+  color: #ffffff;
+  font-size: 13px;
+  width: 250px;
+}
+
+.sideMenuList {
+  color: #424242;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
 .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
 border-color: white;
 background-color: #119EC8;

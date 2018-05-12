@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import {AlertController, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 
 //Paginas
 import { RegistroPage } from '../registro/registro';
@@ -13,6 +13,13 @@ import { GooglePlus } from "@ionic-native/google-plus";
 //Servicio Usuario
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 
+//Modelo
+import {Usuario} from '../../models/usuario.model';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
 
 @Component({
   selector: 'page-login',
@@ -20,32 +27,38 @@ import { UsuarioProvider } from '../../providers/usuario/usuario';
 })
 export class LoginPage {
 
-    usuario: string = "";
-    clave: string = "";
+    usuario: Usuario[] = [];
+
+    email: string = "";
+    password: string = "";
     homePage = HomePage;
 
+    loading;
+
   constructor(	public navCtrl: NavController, 
-  				      public navParams: NavParams,
+  				public navParams: NavParams,
                 private usuarioProvider:UsuarioProvider,
                 private toastCtrl:ToastController,
                 public facebook: Facebook,
-                public googlePlus: GooglePlus ) {
+                public googlePlus: GooglePlus,
+                private loadingCtrl: LoadingController,
+                private alertCtrl: AlertController ) {
   }
 
     ingresar() {
 
-      this.usuarioProvider.login(this.usuario, this.clave).then((respuesta)=>{
-      if (respuesta === false) {
-          let toast = this.toastCtrl.create({
-            message: 'Advertencia: Datos Incorrectos',
-            duration: 4000
-          });
-        toast.present();
-      }else{
-        this.navCtrl.setRoot(HomePage);
-        this.usuarioProvider.cargarStorage();
-      }
-    });
+      this.presentLoadingCustom();
+
+      let newUsuario = new Usuario(null, this.email, this.password );
+
+      this.usuarioProvider.login(newUsuario).subscribe((resp)=>{
+          this.dismissLoadingCustom();
+          this.navCtrl.setRoot(HomePage);
+          this.usuarioProvider.cargarStorage();
+      }, (error)=>{
+          this.dismissLoadingCustom();
+          this.presentAlert();
+      });
 
     }
 
@@ -91,4 +104,27 @@ export class LoginPage {
             })
         })
     }
+
+    presentLoadingCustom() {
+        this.loading = this.loadingCtrl.create({
+            content: 'Iniciando sesión, por favor espere ...'
+        });
+
+        this.loading.present();
+    }
+
+    dismissLoadingCustom(){
+        this.loading.dismiss();
+    }
+
+    presentAlert() {
+        let alert = this.alertCtrl.create({
+            title: 'Error al iniciar sesión',
+            subTitle: 'Tus crendenciales no son correctas.',
+            buttons: ['Aceptar']
+        });
+        alert.present();
+    }
 }
+
+

@@ -5,22 +5,48 @@ import { Observable } from 'rxjs/Observable';
 
 //Storage
 import { Storage } from '@ionic/storage';
+import { Usuario } from '../../models/usuario.model' ;
+import { HttpClient} from "@angular/common/http";
+import {URL_SERVICIOS} from "../../config/config.mongodb";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
 
 @Injectable()
 export class UsuarioProvider {
 
-  usuario:any = {};
+  usuario:Usuario[] = [];
 
-	clave:any = null;
+  token:string = null;
+  isLogin:string = "false";
+  user = {
+      role: null,
+      google: null,
+      _id: null,
+      nombre: null,
+      email: null,
+      password: null,
+      __v: null,
+      img: null
+  };
+
+
+
+  /*clave:any = null;
   name:any = null;
   username:any = null;
   email:any = null;
   password:any = null;
-  logueado:string = null;
+  logueado:string = null;*/
+
+
+
 
   constructor(private afDB: AngularFireDatabase,
       			  private storage: Storage,
-      			  private platform:Platform) {
+      			  private platform:Platform,
+  private http:HttpClient) {
 
   }
 
@@ -75,11 +101,11 @@ export class UsuarioProvider {
             };
 
             this.afDB.object(`/users/${clave}`).update(dataUser);
-            this.logueado = "true";
+            /*this.logueado = "true";
             this.email = email;
             this.clave = clave;
             this.username = clave;
-            this.name = nombres;
+            this.name = nombres;*/
 
             this.guardarStorage();
 
@@ -135,91 +161,38 @@ export class UsuarioProvider {
   }
 
 
-  login(usuario:string, clave:string){
+  login(usuario:Usuario) {
 
-    usuario = usuario.toLowerCase();
-  	clave = clave.toLowerCase();
-
-    let claveConfirmada;
-
-  	let promesa = new Promise((resolve, reject)=>{
-
-  		this.afDB.list('/users/'+usuario).valueChanges().subscribe(data=>{
-
-  			if (data == null) {
-          //DATOS INCORRECTOS
-          resolve(false);
-        }else{
-
-          claveConfirmada = data[5];
-
-          if (claveConfirmada === clave) {
-            // USUARIO Y CLAVE CORRECTA
-            this.email = data[0];
-            this.name = data[3];
-            this.clave = data[5];
-            this.username = usuario;
-            this.logueado = "true";
-            this.usuario = data;
-            this.guardarStorage();
-            resolve(true);
-
-          }else{
-
-            //DATOS INCORRECTOS
-            resolve(false);
-
-          }
-
-        }
-
-  		});
-
-  	}).catch(error=>{
-  		console.log("Error en Promesa Verifica Usuario: "+JSON.stringify(error));
-  	})
-
-  	return promesa
-
+      const url = URL_SERVICIOS + '/login';
+      return this.http.post(url, usuario)
+          .map((resp: any) => {
+              this.token = resp.token;
+              this.isLogin = "true";
+              this.user = resp.usuario;
+              this.guardarStorage();
+              return true;
+          }).catch(err => {
+              return Observable.throw(err);
+          });
   }
 
   guardarStorage(){
-
-
   			if (this.platform.is("cordova")) {
   				// Dispositivo Movil...
-  				this.storage.set("clave", this.clave);
-          this.storage.set("name", this.name);
-          this.storage.set("username", this.username);
-          this.storage.set("email", this.email);
-          this.storage.set("logueado", this.logueado);
-
-
+                this.storage.ready()
+                    .then(()=>{
+                        this.storage.set("token", this.token);
+                        this.storage.set("isLogin", this.isLogin);
+                        this.storage.set("user", this.user);
+                    }).catch(()=>{
+                        alert("Error al guardar los datos ");
+                })
   			}else{
   				// Escritorio
-  				if (this.clave) {
-  					// code...
-  					localStorage.setItem("clave", this.clave);
-            localStorage.setItem("name", this.name);
-            localStorage.setItem("username", this.username);
-            localStorage.setItem("email", this.email);
-            localStorage.setItem("logueado", this.logueado);
-
-
-  				}else{
-  					localStorage.removeItem("clave");
-            localStorage.removeItem("name");
-            localStorage.removeItem("username");
-            localStorage.removeItem("email");
-            localStorage.removeItem("logueado");
-
-  				}
-  				
+                localStorage.setItem('token', this.token);
+                localStorage.setItem('isLogin', this.isLogin);
+                localStorage.setItem('user', JSON.stringify(this.user));
   			}
-
-
-
-
   }
 
 
@@ -233,52 +206,46 @@ export class UsuarioProvider {
   				.then(()=>{
 
   					//Leer del storage
-  					this.storage.get("clave").then(clave=>{
-              if(clave){
-                      this.clave = clave;
-                    }
-  					});
+                    this.storage.get("token").then(token =>{
+                      if (token) {
+                        this.token = token;
+                      }
+                    });
 
-            this.storage.get("name").then(name=>{
-              if (name) {
-                this.name = name;
-              }
-            });
+                    this.storage.get("isLogin").then(isLogin =>{
+                      if (isLogin) {
+                        this.isLogin = isLogin;
+                      }
+                    });
 
-            this.storage.get("username").then(username=>{
-              if (username) {
-                this.username = username;
-              }
-            });
-
-            this.storage.get("email").then(email=>{
-              if (email) {
-                this.email = email;
-              }
-            });
-
-            this.storage.get("logueado").then(logueado=>{
-              if (logueado) {
-                this.logueado = logueado;
-              }
-              resolve();
-            });
+                    this.storage.get("user").then(user =>{
+                      if (user) {
+                          this.user= user;
+                      }
+                        resolve();
+                    });
 
   				})
 
   		}else{
   			// Escritorio
-  			this.clave = localStorage.getItem("clave");
-        this.name = localStorage.getItem("name");
-        this.username = localStorage.getItem("username");
-        this.email = localStorage.getItem("email");
-        this.logueado = localStorage.getItem("logueado");
 
-  			
+            if (localStorage.getItem('token')){
+                this.token = localStorage.getItem('token');
+            }
+
+            if (localStorage.getItem('isLogin')){
+                this.isLogin = localStorage.getItem('isLogin');
+            }
+
+            if (localStorage.getItem('user')) {
+                this.user = JSON.parse(localStorage.getItem('user'));
+            }
+
+            resolve();
   		}
-      resolve();
 
-  	});
+  	    });
 
   	return promesa;
   	
@@ -288,11 +255,18 @@ export class UsuarioProvider {
 
     let promesa = new Promise ((resolve, reject)=>{
 
-      this.clave = null;
-      this.name = null;
-      this.username = null;
-      this.email = null;
-      this.logueado = null;
+        this.token = null;
+        this.isLogin= "false";
+        this.user = {
+            role: null,
+            google: null,
+            _id: null,
+            nombre: null,
+            email: null,
+            password: null,
+            __v: null,
+            img: null
+        };
       this.guardarStorage();
       resolve();
     });

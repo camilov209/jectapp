@@ -8,9 +8,8 @@ page-registro {
 
 	.datosUsuario{
 		position: absolute;
-		left: 30px; 
-		top: 135px;
-		width: 300px;
+		width: 100%;
+		padding: 3%;
 	}
 
 	.fondoInput{	
@@ -44,6 +43,12 @@ page-registro {
 		font-style: italic;
 		text-align: justify;
 		color: red;
+	}
+
+	.attrLabel {
+		padding-left: 10px;
+		font-size: 16px;
+		font-weight: bold;
 	}
 
 }

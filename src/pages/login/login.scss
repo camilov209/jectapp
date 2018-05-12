@@ -1,11 +1,5 @@
 page-login {
 
-	.imageLogo{
-		position: absolute;
-		left: 100px; 
-		top: 50px;
-	}
-
 	.datosUsuario{
 		position: absolute;
 		left: 60px; 
@@ -26,7 +20,7 @@ page-login {
 		background: #1F365B;
 		float:none;
 		text-align:center;
-		margin: auto; 
+		margin: auto;
 		display: block;
 		width:100px;
 		height:50px;
@@ -46,7 +40,7 @@ page-login {
 		font-size:11px;
 		line-height:32px;
 		float:left;
-		left: 40px;
+		display: inline-block;
 		background-image: url("../assets/recursos/facebook.png");
 		background-repeat: no-repeat;
 		background-position: center;
@@ -62,7 +56,7 @@ page-login {
 		font-size:11px;
 		line-height:32px;
 		float:left;
-		left: 50px;
+		display: inline-block;
 		background-image: url("../assets/recursos/gmail.png");
 		background-repeat: no-repeat;
 		background-position: center;
@@ -72,6 +66,71 @@ page-login {
 		font-size:0.8em;
 		color:white;
 	}
+
+
+
+	#container {
+		width: 100%;
+		margin-left:auto;
+		margin-right: auto;
+		text-align: center;
+		overflow: auto;
+	}
+
+	#roundedUsername {
+		width: 100%;
+		height: auto;
+		background-color: #1F365B;
+		color: #ffffff;
+		-moz-border-radius: 50px;
+		-webkit-border-radius: 50px;
+		border-radius: 10px;
+		margin-bottom: 10px;
+	}
+
+	#roundedPassword {
+		width: 100%;
+		height: auto;
+		background-color: #1F365B;
+		color: #ffffff;
+		-moz-border-radius: 50px;
+		-webkit-border-radius: 50px;
+		border-radius: 10px;
+		margin-bottom: 10px;
+	}
+
+	.attrLabel {
+		padding-left: 10px;
+	}
+
+	.item-input .label-md, .item-select .label-md, .item-datetime .label-md {
+		color: #EFEBEB;
+	}
+
+	.iconLogo {
+		opacity: 0.9;
+		margin: 10px auto;
+		display: block
+	}
+
+	.scroll-content {
+		padding-bottom: 0!important;
+	}
+
+
+	#outer {
+		width: 100%;
+		text-align: center;
+	}
+
+	.innerF {
+		display: inline-block;
+	}
+
+	.innerG {
+		display: inline-block;
+	}
+
 
 
 

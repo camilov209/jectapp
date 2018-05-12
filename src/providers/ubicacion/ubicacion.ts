@@ -1,38 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
-import { UsuarioProvider } from '../../providers/usuario/usuario';
+import {Geolocation, GeolocationOptions, Geoposition} from '@ionic-native/geolocation';
 
 
 @Injectable()
 export class UbicacionProvider {
 
-	 usuario: AngularFireObject<any>;
-	 user:string = null;
-	 private watch:any;
+	user:string = null;
+	private watch:any;
 
-  constructor(	private geolocation:Geolocation,
-  				private afDB: AngularFireDatabase,
-  				private _up:UsuarioProvider) {
+	lat:number = null;
+	lng:number = null;
+
+	position:any = {};
+
+    options : GeolocationOptions;
+    currentPos : Geoposition;
+
+  constructor(	private geolocation:Geolocation) {
 
   	}
 
-  iniciarLocalizacion(username:string){
+  iniciarLocalizacion(){
 
-    this.usuario = this.afDB.object('/users/'+username);
+      this.options = {
+          enableHighAccuracy : true
+      };
 
-  	this.watch = this.geolocation.watchPosition()
-		.subscribe((data) => {		
+      return this.geolocation.getCurrentPosition(this.options)
+          .then((pos : Geoposition) => {
 
-			 	console.log(data);
+              this.position = pos;
+              return this.position;
 
-			 	this.usuario.update({
-			 		lat:data.coords.latitude,
-			 		lng:data.coords.longitude
-			 	});
-			 
-		});
-
+      },(err : PositionError)=>{
+          console.log("error : " + err.message);
+      });
   }
 
   detenerLocalizacion(){

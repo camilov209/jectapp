@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, AlertController  } from 'ionic-angular';
+import {Platform, AlertController, NavController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -13,6 +13,8 @@ import { CompartirPage } from '../pages/compartir/compartir';
 //SERVICIOS
 import { UsuarioProvider } from '../providers/usuario/usuario';
 import { UbicacionProvider } from '../providers/ubicacion/ubicacion';
+import {PerfilPage} from "../pages/perfil/perfil";
+
 
 
 @Component({
@@ -26,20 +28,40 @@ export class MyApp {
   pagesAdmin: Array<{titulo:string, Component:any, icon:string}>;
   
   rootPage:any;
+  pagePerfil: any = PerfilPage;
 
-  constructor(	platform: Platform, 
-        				statusBar: StatusBar, 
-        				splashScreen: SplashScreen,
-        				private _up:UsuarioProvider,
+  constructor(	platform: Platform,
+        		statusBar: StatusBar,
+        		splashScreen: SplashScreen,
+        		private _up:UsuarioProvider,
                 private _ubicacion:UbicacionProvider,
                 private alertCtrl: AlertController) {
 
     platform.ready().then(() => {
 
+        this._up.cargarStorage().then(()=>{
+
+            statusBar.styleDefault();
+            splashScreen.hide();
+
+            console.log(this._up.isLogin);
+
+            if(this._up.isLogin === 'true'){
+                this.rootPage = HomePage;
+            }else{
+                this.rootPage = LoginPage;
+            }
+
+        }).catch(()=>{
+            alert("Error");
+        });
+
+
       this.pagesUsuario = [
         {titulo:'TURISMO', Component: TurismoPage, icon:'book'},
         {titulo:'FAVORITOS', Component: FavoritosPage, icon:'heart'},
-        {titulo:'COMPARTIR', Component: CompartirPage, icon:'share'},
+        {titulo:'COMPARTIR', Component: CompartirPage, icon:'share'}
+
 
       ];
 
@@ -47,21 +69,10 @@ export class MyApp {
         
       ];
 
-      this._up.cargarStorage().then(()=>{
-
-         if(this._up.logueado){
-            this.rootPage = HomePage;
-          }else{
-            this.rootPage = LoginPage;
-          }
-
-          statusBar.styleDefault();
-          splashScreen.hide();
-
-      })
             
     });
   }
+
 
    goToPage(page){
     this.nav.setRoot(page);
@@ -83,7 +94,7 @@ export class MyApp {
           handler: () => {
               this._up.cerrarSession().then(()=>{
               this._up.cargarStorage();
-              this._ubicacion.detenerLocalizacion();
+              //this._ubicacion.detenerLocalizacion();
               this.nav.setRoot(LoginPage);
             });
           }
@@ -94,8 +105,5 @@ export class MyApp {
     confirm.present();
     
   }
-
-    
-
 }
 
