@@ -1,5 +1,6 @@
+
 import { Component, ViewChild } from '@angular/core';
-import {Platform, AlertController, NavController} from 'ionic-angular';
+import {Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,7 +15,8 @@ import { CompartirPage } from '../pages/compartir/compartir';
 import { UsuarioProvider } from '../providers/usuario/usuario';
 import { UbicacionProvider } from '../providers/ubicacion/ubicacion';
 import {PerfilPage} from "../pages/perfil/perfil";
-
+import {IntroductionPage} from "../pages/introduction/introduction";
+import {EmpresasPage} from "../pages/empresas/empresas";
 
 
 @Component({
@@ -22,61 +24,101 @@ import {PerfilPage} from "../pages/perfil/perfil";
 })
 export class MyApp {
 
-  @ViewChild('NAV') nav:any;
+    @ViewChild('NAV') nav: any;
 
-  pagesUsuario: Array<{titulo:string, Component:any, icon:string}>;
-  pagesAdmin: Array<{titulo:string, Component:any, icon:string}>;
-  
-  rootPage:any;
-  pagePerfil: any = PerfilPage;
+    pagesUsuario: Array<{ titulo: string, Component: any, icon: string, classStyle: string, iconRigth: string, activeButton: boolean }>;
+    pagesAdmin: Array<{ titulo: string, Component: any, icon: string }>;
 
-  constructor(	platform: Platform,
-        		statusBar: StatusBar,
-        		splashScreen: SplashScreen,
-        		private _up:UsuarioProvider,
-                private _ubicacion:UbicacionProvider,
+    rootPage: any;
+    pagePerfil: any = PerfilPage;
+
+    empresasPage = EmpresasPage;
+    turismoPage = TurismoPage;
+    rutasFavoritas = FavoritosPage;
+    compartirPage = CompartirPage;
+    homePage = HomePage;
+
+
+    activeSubmenus: boolean = true;
+
+    constructor(private platform: Platform,
+                private statusBar: StatusBar,
+                private splashScreen: SplashScreen,
+                private _up: UsuarioProvider,
+                private _ubicacion: UbicacionProvider,
                 private alertCtrl: AlertController) {
 
-    platform.ready().then(() => {
 
-        this._up.cargarStorage().then(()=>{
+        this.initializeApp();
 
-            statusBar.styleDefault();
-            splashScreen.hide();
+  }
 
-            console.log(this._up.isLogin);
+  initializeApp() {
+    this.platform.ready().then(() => {
 
-            if(this._up.isLogin === 'true'){
+      this._up.cargarStorage()
+          .then(()=>{
+
+              this.statusBar.styleDefault();
+              this.splashScreen.hide();
+
+            if (this._up.showTutorial === 'true'){
+                this.rootPage = IntroductionPage;
+            }else if(this._up.showTutorial === 'false' && this._up.isLogin === 'true'){
                 this.rootPage = HomePage;
             }else{
                 this.rootPage = LoginPage;
             }
 
-        }).catch(()=>{
-            alert("Error");
-        });
-
-
-      this.pagesUsuario = [
-        {titulo:'TURISMO', Component: TurismoPage, icon:'book'},
-        {titulo:'FAVORITOS', Component: FavoritosPage, icon:'heart'},
-        {titulo:'COMPARTIR', Component: CompartirPage, icon:'share'}
-
-
-      ];
-
-      this.pagesAdmin = [
-        
-      ];
-
-            
+          });
     });
   }
 
+  ionViewDidLoad(){
+      this.pagesUsuario = [
+          {titulo:'Turismo', Component: TurismoPage, icon:'book', classStyle: 'myBg', iconRigth: '', activeButton: true},
+          {titulo:'Favoritos', Component: false, icon:'heart', classStyle: 'myBg', iconRigth: 'ios-arrow-down-outline', activeButton: true},
+          {titulo:'Rutas Favoritas', Component: FavoritosPage, icon:'heart', classStyle: 'myBg2', iconRigth: '', activeButton: this.activeSubmenus},
+          {titulo:'Sitios Favoritos', Component: FavoritosPage, icon:'heart', classStyle: 'myBg2', iconRigth: '', activeButton: this.activeSubmenus},
+          {titulo:'Compartir', Component: CompartirPage, icon:'share', classStyle: 'myBg', iconRigth: '', activeButton: true}
+      ];
+
+      this.pagesAdmin = [
+
+      ];
+  }
+
+    /*initializeApp() {
+        this.platform.ready().then(() => {
+
+            this._up.cargarStorage().then(()=>{
+
+                this.statusBar.styleDefault();
+                this.splashScreen.hide();
+
+
+
+            }).catch(()=>{
+                alert("Error");
+            });
+
+        });
+    }*/
+
 
    goToPage(page){
-    this.nav.setRoot(page);
-  }
+      this.activeSubmenus = true;
+      this.nav.setRoot(page);
+   }
+
+    openSubMenus(){
+      if (this.activeSubmenus === true){
+          this.activeSubmenus = false;
+      }else {
+          this.activeSubmenus = true;
+      }
+
+    }
 
   salir(){
 
@@ -104,6 +146,15 @@ export class MyApp {
 
     confirm.present();
     
+  }
+
+
+  getTakePhoto(image){
+      if (image === undefined || image === null || image === ''){
+          return 'assets/recursos/usuario-logo.png';
+      }else {
+          return image;
+      }
   }
 }
 

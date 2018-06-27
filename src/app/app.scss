@@ -15,10 +15,17 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+@import "../../node_modules/ionic2-auto-complete/auto-complete";
+
 .myBg{
    background-color:#1F365B;
    color: white;
  }
+
+.myBg2{
+  background-color: #f53d3d;
+  color: white;
+}
 
  .datos1{
  	position: relative;
@@ -44,14 +51,12 @@
 
 .sideMenuAvatar{
   border-radius: 100%;
+  margin-bottom: 7px;
 }
 
 .sideMenuWelcome {
-  position: absolute;
-  padding-top: 10px;
-  color: #ffffff;
-  width: 250px;
   font-size: 14px;
+  color: white;
 }
 
 .sideMenuProfile {
@@ -73,3 +78,19 @@
 border-color: white;
 background-color: #119EC8;
 }
+
+.list-md .item-block .item-inner {
+  border-bottom: unset;
+}
+.item-md.item-block .item-inner {
+  border-bottom: unset;
+}
+
+.externo {
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+

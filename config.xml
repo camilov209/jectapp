@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.jectapp.produ" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.softvation.jectapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>JectApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -91,4 +91,11 @@
     <plugin name="cordova-plugin-googleplus" spec="~5.2.2">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.546951244739-sbg6m9m88joe1pr0s7l3nrjqoh6c08ak" />
     </plugin>
+    <plugin name="cordova-plugin-nativegeocoder" spec="~3.1.1" />
+    <plugin name="cordova-plugin-camera" spec="~4.0.3" />
+    <plugin name="cordova-plugin-telerik-imagepicker" spec="~2.2.0">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="Foto de perfil Jectapp" />
+    </plugin>
+    <plugin name="com-badrit-base64" spec="~0.2.0" />
+    <plugin name="cordova.plugins.diagnostic" spec="~4.0.8" />
 </widget>

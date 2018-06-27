@@ -15,7 +15,7 @@
   <div class="datosUsuario">
 
     <div padding-bottom="10px">
-        <h5><b>Por favor llena los siguientes datos para la crear una cuenta en Jectapp.</b></h5>
+        <h5><b>Por favor llena los siguientes datos para crear una cuenta en Jectapp.</b></h5>
     </div>
 
     <form [formGroup]="myForm" (ngSubmit)="saveData()">
@@ -30,7 +30,7 @@
         </ion-item>
         <br>
 
-        <ion-item class="fondoInput">
+        <!--<ion-item class="fondoInput">
           <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Usuario</ion-label>
           <ion-input formControlName="usuario" type="text" class="inputColor" (focus)="borrarExiste()" (focusout)="verificaUsuario()"></ion-input>
         </ion-item>
@@ -42,22 +42,11 @@
           <p color="danger" ion-text>Nombre de usuario ya esta en uso</p>
         </ion-item>
 
-        <br>
-
-
-        <ion-item class="fondoInput">
-          <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Zona de Registro</ion-label>
-          <ion-input formControlName="zona" type="text" class="inputColor"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="myForm.get('zona').errors && myForm.get('zona').dirty">
-          <p color="danger" ion-text *ngIf="myForm.get('zona').hasError('required')">Campo requerido</p>
-          <p color="danger" ion-text *ngIf="myForm.get('zona').hasError('minlength')">Ingresar minimo 6 caracteres</p>
-        </ion-item>
-        <br>
+        <br>-->
 
         <ion-item class="fondoInput">
           <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Email</ion-label>
-          <ion-input formControlName="email" type="email" class="inputColor" (focus)="borrarExisteMail()" (focusout)="verificaEmail()"></ion-input>
+          <ion-input formControlName="email" type="email" class="inputColor"></ion-input>
         </ion-item>
         <ion-item *ngIf="myForm.get('email').errors && myForm.get('email').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('email').hasError('required')">Campo requerido</p>
@@ -83,11 +72,20 @@
           <ion-checkbox formControlName="notificacion"></ion-checkbox>
         </ion-item>
 
-        <p class="parrafo">He leído y acepto los terminos y condiciones</p>
+        <br>
+
+        <ion-item class="fondoInput">
+          <ion-label class="inputColor">Acepto términos y condiciones</ion-label>
+          <ion-checkbox formControlName="politicas" (ionChange)="modalPoliticas($event)" required></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="errPoliticas === false">
+          <p color="danger" ion-text *ngIf="errPoliticas === false">Por favor acepta los términos y condiciones.</p>
+        </ion-item>
+
 
       </ion-list>
       <div padding>
-        <button ion-button block type="submit" [disabled]="!myForm.valid || existeMail || existe" class="botonRegistro">REGISTRARSE</button>
+        <button ion-button block type="submit" [disabled]="!myForm.valid || errPoliticas === false" class="botonRegistro">REGISTRARSE</button>
       </div>
     </form>
   </div>

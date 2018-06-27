@@ -20,6 +20,7 @@ export class UsuarioProvider {
 
   token:string = null;
   isLogin:string = "false";
+  showTutorial: string = "true";
   user = {
       role: null,
       google: null,
@@ -28,7 +29,7 @@ export class UsuarioProvider {
       email: null,
       password: null,
       __v: null,
-      img: null
+      img: null,
   };
 
 
@@ -45,45 +46,76 @@ export class UsuarioProvider {
 
   constructor(private afDB: AngularFireDatabase,
       			  private storage: Storage,
-      			  private platform:Platform,
-  private http:HttpClient) {
+      			  private platform: Platform,
+                  private http: HttpClient) {
 
   }
 
-  createUser(nombres:string, usuario:string, zona:string, email:string, clave:string, notificacion:boolean){
 
-    let promesa = new Promise ((resolve, reject)=>{
 
-      this.afDB.list('/users/'+usuario).valueChanges().subscribe(data=>{
+  createUser(usuario: Usuario){
 
-        if (data.length == 0) {
-          // USERNAME DISPONIBLE
-            let dataUser = {
-               name: nombres,
-               username: usuario,
-               email:email,
-               password:clave,
-               notificacion: notificacion,
-               lat:'2.4464798',
-               lng:'-76.6008221',
-               zona:zona
-             };
+      const url = URL_SERVICIOS + '/usuario/';
+      return this.http.post(url, usuario)
+          .map((resp: any) => {
+              return true;
+          }).catch(err => {
+              return Observable.throw(err);
+          });
 
-              this.afDB.object(`/users/${usuario}`).update(dataUser);
-              resolve(true);
-          
-        }else{
-          // USERNAME YA EXISTE
-             resolve(false);
-        }
+    };
 
-      });
 
-    });
+    rememberPass(email: string){
 
-    return promesa;
+      const url = URL_SERVICIOS + '/usuario/password/recordar/' + email;
+      return this.http.get(url)
+          .map((resp: any) => {
+              return true;
+          }).catch(err => {
+              return Observable.throw(err);
+          });
 
-  }
+    };
+
+
+    changePass(pass: string, id: string){
+
+      const url = URL_SERVICIOS + '/usuario/password/recover/' + id;
+      return this.http.post(url, {'password': pass})
+          .map((resp: any) => {
+              return true;
+          }).catch(err => {
+              return Observable.throw(err);
+          });
+
+    };
+
+
+
+    updateUser(usuario: Usuario, token, id){
+
+        const url = URL_SERVICIOS + '/usuario/' + id + '?token=' + token;
+        return this.http.put(url, usuario)
+            .map((resp: any) => {
+                return true;
+            }).catch(err => {
+                return Observable.throw(err);
+            });
+
+    };
+
+    getAllSitios(){
+
+        const url = URL_SERVICIOS + '/marcador/all';
+        return this.http.get(url)
+            .map((resp: any) => {
+                return resp;
+            }).catch(err => {
+                return Observable.throw(err);
+            });
+
+    };
 
 
     createUserRedes(nombres:string, email:string, clave:string){
@@ -168,6 +200,7 @@ export class UsuarioProvider {
           .map((resp: any) => {
               this.token = resp.token;
               this.isLogin = "true";
+              this.showTutorial = "false";
               this.user = resp.usuario;
               this.guardarStorage();
               return true;
@@ -176,6 +209,7 @@ export class UsuarioProvider {
           });
   }
 
+
   guardarStorage(){
   			if (this.platform.is("cordova")) {
   				// Dispositivo Movil...
@@ -183,6 +217,7 @@ export class UsuarioProvider {
                     .then(()=>{
                         this.storage.set("token", this.token);
                         this.storage.set("isLogin", this.isLogin);
+                        this.storage.set("showTutorial", this.showTutorial);
                         this.storage.set("user", this.user);
                     }).catch(()=>{
                         alert("Error al guardar los datos ");
@@ -191,6 +226,7 @@ export class UsuarioProvider {
   				// Escritorio
                 localStorage.setItem('token', this.token);
                 localStorage.setItem('isLogin', this.isLogin);
+                localStorage.setItem('showTutorial', this.showTutorial);
                 localStorage.setItem('user', JSON.stringify(this.user));
   			}
   }
@@ -218,6 +254,12 @@ export class UsuarioProvider {
                       }
                     });
 
+                    this.storage.get("showTutorial").then(showTutorial =>{
+                        if (showTutorial) {
+                            this.showTutorial = showTutorial;
+                        }
+                    });
+
                     this.storage.get("user").then(user =>{
                       if (user) {
                           this.user= user;
@@ -236,6 +278,10 @@ export class UsuarioProvider {
 
             if (localStorage.getItem('isLogin')){
                 this.isLogin = localStorage.getItem('isLogin');
+            }
+
+            if (localStorage.getItem('showTutorial')){
+                this.showTutorial = localStorage.getItem('showTutorial');
             }
 
             if (localStorage.getItem('user')) {
@@ -257,6 +303,8 @@ export class UsuarioProvider {
 
         this.token = null;
         this.isLogin= "false";
+        this.showTutorial = "false";
+
         this.user = {
             role: null,
             google: null,

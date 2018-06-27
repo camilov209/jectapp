@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {Content, IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -30,6 +30,7 @@ import { Facebook } from '@ionic-native/facebook';
 
 //Google
 import { GooglePlus } from "@ionic-native/google-plus";
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 //Paginas
 import { LoginPage } from '../pages/login/login';
@@ -43,6 +44,23 @@ import {PerfilPage} from "../pages/perfil/perfil";
 
 //HttpClient
 import { HttpClientModule } from "@angular/common/http";
+import {IntroductionPage} from "../pages/introduction/introduction";
+import {ModalPoliticasPage} from "../pages/modal-politicas/modal-politicas";
+import {RutasPage} from "../pages/rutas/rutas";
+import {Camera} from "@ionic-native/camera";
+import { RutasProvider } from '../providers/rutas/rutas';
+import {EmpresasPage} from "../pages/empresas/empresas";
+import { EmpresaProvider } from '../providers/empresa/empresa';
+
+import { AutoCompleteModule } from 'ionic2-auto-complete';
+import { CompleteTestService } from '../providers/complete-test-service/complete-test-service';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
+import { AgmDirectionModule } from 'agm-direction';
+import {VerMasTurismoPage} from "../pages/ver-mas-turismo/ver-mas-turismo";
+
+import {Base64} from "@ionic-native/base64";
+import {Diagnostic} from "@ionic-native/diagnostic";
 
 
 
@@ -59,7 +77,12 @@ import { HttpClientModule } from "@angular/common/http";
     FavoritosPage,
     CompartirPage,
     OrigenDestinoPage,
-    PerfilPage
+    PerfilPage,
+    IntroductionPage,
+    RutasPage,
+    EmpresasPage,
+    VerMasTurismoPage,
+    ModalPoliticasPage
   ],
   imports: [
     BrowserModule,
@@ -68,9 +91,12 @@ import { HttpClientModule } from "@angular/common/http";
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     IonicImageViewerModule,
-      HttpClientModule,
-    IonicStorageModule.forRoot(),
-      AgmCoreModule.forRoot({
+    HttpClientModule,
+    AutoCompleteModule,
+    BrowserAnimationsModule,
+    AgmDirectionModule,
+      IonicStorageModule.forRoot(),
+    AgmCoreModule.forRoot({
         apiKey: 'AIzaSyDn71L32gHGhwYwFNlhWw4FElZWjlZpWcQ',
         libraries: ["places"]
       })
@@ -86,7 +112,12 @@ import { HttpClientModule } from "@angular/common/http";
     FavoritosPage,
     CompartirPage,
     OrigenDestinoPage,
-    PerfilPage
+    PerfilPage,
+    IntroductionPage,
+    RutasPage,
+    EmpresasPage,
+    VerMasTurismoPage,
+    ModalPoliticasPage
   ],
   providers: [
     StatusBar,
@@ -94,10 +125,17 @@ import { HttpClientModule } from "@angular/common/http";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UsuarioProvider,
     AngularFireDatabase,
+    Camera,
+    Base64,
+    Diagnostic,
     Geolocation,
+    NativeGeocoder,
     UbicacionProvider,
     Facebook,
-    GooglePlus
+    GooglePlus,
+    RutasProvider,
+    EmpresaProvider,
+    CompleteTestService
   ]
 })
 export class AppModule {}

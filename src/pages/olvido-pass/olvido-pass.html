@@ -15,12 +15,12 @@
 		<ion-list inset no-lines>
 
 			  <ion-item class="fondoInput">
-			    <ion-input placeholder="Email" type="email" class="inputColor"></ion-input>
+			    <ion-input placeholder="Email" type="email" [(ngModel)]="email" class="inputColor"></ion-input>
 			  </ion-item>
 
 			  <p class="parrafo">Se enviará un correo electrónico con las instrucciones. </p>
 
-			  <button ion-button class="botonRegistro">ENVIAR</button>
+			  <button ion-button class="botonRegistro" (click)="recordarPass(email)">ENVIAR</button>
 
 		</ion-list>
 	</div>

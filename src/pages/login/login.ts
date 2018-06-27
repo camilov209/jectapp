@@ -19,6 +19,7 @@ import {Usuario} from '../../models/usuario.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import {errorObject} from "rxjs/util/errorObject";
 
 
 @Component({
@@ -49,7 +50,7 @@ export class LoginPage {
 
       this.presentLoadingCustom();
 
-      let newUsuario = new Usuario(null, this.email, this.password );
+      let newUsuario = new Usuario(null, this.email, this.password);
 
       this.usuarioProvider.login(newUsuario).subscribe((resp)=>{
           this.dismissLoadingCustom();
@@ -74,15 +75,17 @@ export class LoginPage {
       this.facebook.login(['email']).then(res=>{
           const fc = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
           firebase.auth().signInWithCredential(fc).then(fs =>{
-              this.usuarioProvider.createUserRedes(fs.displayName, fs.email, fs.uid)
-          .then(()=>{
-                this.navCtrl.setRoot(HomePage);
-                this.usuarioProvider.cargarStorage();
-              }).catch(()=>{
-                  alert("Errir");
-              })
-          }).catch(ferr => {
-              alert("Error al iniciar sesión");
+              this.usuarioProvider.isLogin = 'true';
+              this.usuarioProvider.showTutorial = 'false';
+              this.usuarioProvider.user.nombre = fs.displayName;
+              this.usuarioProvider.user.email = fs.email;
+              this.usuarioProvider.user.password = null;
+              this.usuarioProvider.user.img = fs.providerData[0].photoURL + '?type=large';
+              this.usuarioProvider.user._id = fs.providerData[0].uid;
+              this.usuarioProvider.guardarStorage();
+              this.usuarioProvider.cargarStorage();
+
+              this.navCtrl.setRoot(HomePage);
 
           })
 
@@ -97,11 +100,23 @@ export class LoginPage {
             'offline': true
         }).then(res=>{
             firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-                .then(suc=>{
-                    alert("Login Succesfull");
+                .then(success=>{
+                    this.usuarioProvider.isLogin = 'true';
+                    this.usuarioProvider.showTutorial = 'false';
+                    this.usuarioProvider.user.nombre = success.displayName;
+                    this.usuarioProvider.user.email = success.email;
+                    this.usuarioProvider.user.password = null;
+                    this.usuarioProvider.user.img = success.providerData[0].photoURL;
+                    this.usuarioProvider.user._id = success.providerData[0].uid;
+                    this.usuarioProvider.guardarStorage();
+                    this.usuarioProvider.cargarStorage();
+
+                    this.navCtrl.setRoot(HomePage);
                 }).catch(ns=>{
                     alert("Not Successfull " + JSON.stringify(ns));
             })
+        }).catch(error=>{
+            alert("Por favor verifica tu conexión a internet.");
         })
     }
 

@@ -33,7 +33,7 @@ export class UbicacionProvider {
               return this.position;
 
       },(err : PositionError)=>{
-          console.log("error : " + err.message);
+          alert("error : " + err.message);
       });
   }
 
