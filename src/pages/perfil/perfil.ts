@@ -8,6 +8,7 @@ import {HomePage} from "../home/home";
 import {Usuario} from "../../models/usuario.model";
 import {URL_SERVICIOS} from "../../config/config.mongodb";
 import {Base64} from "@ionic-native/base64";
+import {LoginPage} from "../login/login";
 
 //@IonicPage()
 @Component({
@@ -35,6 +36,8 @@ export class PerfilPage {
     image: string = null;
     notificacion:boolean;
     img: any = null;
+
+    statusPassword = true;
 
     loading;
 
@@ -69,40 +72,65 @@ export class PerfilPage {
 
 
     saveData(){
-        this.presentLoadingCustom();
 
-        this.nombres 		= 	this.myForm.value.nombre;
-        this.email 			= 	this.myForm.value.email;
-        this.clave 			= 	this.myForm.value.password;
-        this.email = this.email.toLowerCase();
+        let confirm = this.alertCtrl.create({
+            title: 'Advertencia',
+            message: 'Se cerrará la sesión, ¿Seguro que deseas salir?',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    handler: () => {
+                    }
+                },
+                {
+                    text: 'Aceptar',
+                    handler: () => {
 
-        /*let newUsuario = new Usuario(this.nombres, this.email, this.clave, this.user.img, this.user.role, false, this.user._id);
+                        this.presentLoadingCustom();
 
-        alert(this.user.img);
+                        this.nombres 		= 	this.myForm.value.nombre;
+                        this.email 			= 	this.myForm.value.email;
+                        this.clave 			= 	this.myForm.value.password;
+                        this.email = this.email.toLowerCase();
 
-        this.subirArchivo(this.user.img, 'Usuarios', this.user._id).then(resp =>{
-            alert(JSON.stringify(resp));
-        }).catch(error =>{
-            alert(JSON.stringify(error));
+                        let newUsuario = new Usuario(this.nombres, this.email, this.clave, this.user.img, this.user.role, false, this.user._id);
+
+                        //alert(this.user.img);
+
+                        /*this.subirArchivo(this.user.img, 'Usuarios', this.user._id).then(resp =>{
+                            alert(JSON.stringify(resp));
+                        }).catch(error =>{
+                            alert(JSON.stringify(error));
+                        });*/
+
+
+                        this.usuarioProvider.updateUser(newUsuario, this.token, this.user._id).subscribe((resp => {
+
+                            if (this.statusPassword !== true){
+                                this.dismissLoadingCustom();
+                                this.usuarioProvider.changePass(this.clave, this.user._id).subscribe(resp =>{
+                                    console.log("Guardado correcto");
+                                }, error =>{
+                                    this.presentAlert("Ha ocurrido un error al cambiar la contraseña. " + JSON.stringify(error));
+                                    this.dismissLoadingCustom();
+                                });
+                            }else {
+                                this.dismissLoadingCustom();
+                            }
+
+                            this.presentToast();
+
+                        }), (error)=>{
+                            this.dismissLoadingCustom();
+                            this.presentAlert(error.error);
+                        });
+                    }
+                }
+            ]
         });
 
+        confirm.present();
 
-        /*this.usuarioProvider.updateUser(newUsuario, this.token, this.user._id).subscribe((resp => {
-            this.dismissLoadingCustom();
-            this.presentToast();
-
-        }), (error)=>{
-            this.dismissLoadingCustom();
-            this.presentAlert(error.error);
-        });*/
-
-
-         this.usuarioProvider.changePass(this.clave, this.user._id).subscribe(resp =>{
-               console.log(resp);
-
-         }, error =>{
-             console.log(error);
-         })
 
 
     }
@@ -194,6 +222,14 @@ export class PerfilPage {
         });
 
         toast.present();
+
+
+        this.usuarioProvider.cerrarSession().then(()=>{
+            this.usuarioProvider.cargarStorage();
+            this.navCtrl.setRoot(LoginPage);
+        });
+
+
     }
 
 
@@ -223,6 +259,17 @@ export class PerfilPage {
             xhr.send(formData);
 
         });
+    }
+
+    getChangePassword(){
+        this.statusPassword = !this.statusPassword;
+    }
+
+
+    confirmChange(){
+
+
+
     }
 
 

@@ -21,13 +21,13 @@
 
     <ion-item>
       <ion-avatar item-start>
-        <img src="assets/recursos/iconos.jpg">
+        <ion-icon name="bus" [color]="cambioColorRuta(dE.nombre)"></ion-icon>
       </ion-avatar>
       <h2><b>{{dE.nombre}}</b></h2>
       <p>Popayán - Cauca</p>
     </ion-item>
 
-    <img src="{{url + dE.img1}}">
+    <img src="{{dE.imagen}}">
 
     <ion-card-content>
       <p>{{dE.informacion}}</p>

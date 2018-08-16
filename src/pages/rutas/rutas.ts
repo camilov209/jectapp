@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {ModalController, NavController, NavParams} from 'ionic-angular';
 import {RutasProvider} from "../../providers/rutas/rutas";
+import {ModalRutasPage} from "../modal-rutas/modal-rutas";
 
 //@IonicPage()
 @Component({
@@ -17,7 +18,8 @@ export class RutasPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private _ruta: RutasProvider) {
+              private _ruta: RutasProvider,
+              public modalCtrl: ModalController) {
 
     this.id_empresa = this.navParams.get('_id');
     this.title = this.id_empresa;
@@ -30,7 +32,6 @@ export class RutasPage {
   getAllRutas() {
       this._ruta.getAllRoutes().subscribe(
           (resp) => {
-
 
           for (let i = 0; i < resp.rutas.length; i++){
               if (resp.rutas[i].empresa.nombre === this.id_empresa){
@@ -52,9 +53,16 @@ export class RutasPage {
                 return 'secondary';
             case 'Transpubenza':
                 return 'primary';
-            case 'Translibertad':
+            case 'Translibertad LTDA':
                 return 'advertence';
         }
+    }
+
+    goToMap(data){
+      console.log(data);
+        let modal = this.modalCtrl.create(ModalRutasPage, {ruta: data});
+        modal.present();
+        //this.navCtrl.push(HomePage, {ruta: data});
     }
 
 }

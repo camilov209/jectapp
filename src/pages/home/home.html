@@ -22,10 +22,10 @@
             [styles]="styles"
             [disableDefaultUI]="true">
 
-        <agm-kml-layer
+        <!--<agm-kml-layer
                 *ngIf="dir"
                 [url]="urlRoutes">
-        </agm-kml-layer>
+        </agm-kml-layer>-->
 
         <!--<agm-direction  [origin]="dir.origin" [destination]="dir.destination"></agm-direction>-->
 
@@ -36,7 +36,8 @@
                 [longitude]="m.lng"
                 [iconUrl]="m.icon"
                 [markerDraggable]="m.draggable"
-                (dragEnd)="markerDragEnd(m, $event)" >
+                (dragEnd)="markerDragEnd(m, $event)"
+                [visible]="dir === undefined">
 
             <agm-info-window *ngIf="m.label !== 'position'">
                 <p class="titleInfo"><b>{{m.label}}</b></p>

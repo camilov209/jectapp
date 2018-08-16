@@ -21,16 +21,16 @@ export class OlvidoPassPage {
   recordarPass(email){
   	console.log(email);
   	this._usuarioService.rememberPass(email).subscribe(resp => {
-  		console.log(resp);
+        this.showAlert('¡Éxito!', 'Por favor revisa tu bandeja de entrada del correo !' + email + ' para restablecer tu contraseña.');
   	}, error =>{
-  		this.showAlert();
+  		this.showAlert('¡Error!', 'Correo no inválido o no registrado!');
   	})	
 	}
 	
-	showAlert() {
+	showAlert(title, text) {
     const alert = this.alertCtrl.create({
-      title: 'Error!',
-      subTitle: 'Correo no inválido o no registrado!',
+      title: title,
+      subTitle: text,
       buttons: ['Aceptar']
     });
     alert.present();

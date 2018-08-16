@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, ModalController, AlertController, NavParams} from 'ionic-angular';
+import {NavController, ModalController, AlertController, NavParams, LoadingController} from 'ionic-angular';
 import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
 
 //Servicios
@@ -71,6 +71,8 @@ export class HomePage {
     dir = undefined;
     urlRoutes: string = "";
 
+    loading;
+
   constructor(	public navCtrl: NavController,
                 public navParams: NavParams,
                 private _ubicacion:UbicacionProvider,
@@ -78,14 +80,16 @@ export class HomePage {
                 private modalCtrl: ModalController,
                 private nativeGeocoder: NativeGeocoder,
                 public alertCtrl: AlertController,
-                private diagnostic: Diagnostic) {
+                private diagnostic: Diagnostic,
+                private loadingCtrl: LoadingController) {
 
-      this.dir = this.navParams.get('ruta');
+      /*this.dir = this.navParams.get('ruta');
 
       if (this.dir){
-          this.urlRoutes = "https://encuestareporte.000webhostapp.com/" + this.dir.nombre + ".kml";
+          //this.urlRoutes = "https://encuestareporte.000webhostapp.com/" + this.dir.nombre + ".kml";
+          this.urlRoutes = "https://encuestareporte.000webhostapp.com/rutas/TL7BT1.kml";
           console.log(this.urlRoutes);
-      }
+      }*/
   }
 
 
@@ -96,14 +100,17 @@ export class HomePage {
       //this.urlRoutes = "http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml";
 
 
+      this.presentLoadingCustom();
 
       this._ubicacion.iniciarLocalizacion()
           .then(resp =>{
 
+              this.dismissLoadingCustom();
+
               this.lat = resp.coords.latitude;
               this.lng = resp.coords.longitude;
 
-
+              
               this.nativeGeocoder.reverseGeocode(this.lat, this.lng)
                   .then((result: NativeGeocoderReverseResult) => {
                       if (result[0].subAdministrativeArea !== 'Popayán'){
@@ -205,11 +212,16 @@ export class HomePage {
         alert.present();
     }
 
-    alertMsm($e){
-        console.log($e);
+    presentLoadingCustom() {
+        this.loading = this.loadingCtrl.create({
+            content: 'Cargando mapa y tu ubicación actual, por favor espera ...'
+        });
+
+        this.loading.present();
     }
 
-
-
+    dismissLoadingCustom(){
+        this.loading.dismiss();
+    }
 
 }

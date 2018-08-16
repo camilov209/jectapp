@@ -61,6 +61,7 @@ import {VerMasTurismoPage} from "../pages/ver-mas-turismo/ver-mas-turismo";
 
 import {Base64} from "@ionic-native/base64";
 import {Diagnostic} from "@ionic-native/diagnostic";
+import {ModalRutasPage} from "../pages/modal-rutas/modal-rutas";
 
 
 
@@ -82,7 +83,8 @@ import {Diagnostic} from "@ionic-native/diagnostic";
     RutasPage,
     EmpresasPage,
     VerMasTurismoPage,
-    ModalPoliticasPage
+    ModalPoliticasPage,
+    ModalRutasPage
   ],
   imports: [
     BrowserModule,
@@ -117,7 +119,8 @@ import {Diagnostic} from "@ionic-native/diagnostic";
     RutasPage,
     EmpresasPage,
     VerMasTurismoPage,
-    ModalPoliticasPage
+    ModalPoliticasPage,
+    ModalRutasPage
   ],
   providers: [
     StatusBar,

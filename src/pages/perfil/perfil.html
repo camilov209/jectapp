@@ -62,15 +62,17 @@
         </ion-item>
         <br>
 
-        <ion-item>
-          <ion-label>¿Deseas cambiar la contraseña?</ion-label>
-          <ion-checkbox color="dark" checked="true"></ion-checkbox>
-        </ion-item>
-
-        <ion-item class="fondoInput">
+        <ion-item class="fondoInput" *ngIf="statusPassword !== true">
           <ion-label class="attrLabel"><ion-icon name="contact"></ion-icon> Contraseña</ion-label>
           <ion-input formControlName="password" type="password" class="inputColor"></ion-input>
         </ion-item>
+
+        <ion-item>
+          <ion-label><b>¿Deseas cambiar la contraseña?</b></ion-label>
+          <ion-checkbox (ionChange)="getChangePassword()" color="azulJectapp" checked="false"></ion-checkbox>
+        </ion-item>
+
+
         <!--<ion-item *ngIf="myForm.get('password').errors && myForm.get('password').dirty">
           <p color="danger" ion-text *ngIf="myForm.get('password').hasError('required')">Campo requerido</p>
           <p color="danger" ion-text *ngIf="myForm.get('password').hasError('pattern')">No es una contraseña segura</p>
@@ -78,7 +80,7 @@
         <br>
 
       </ion-list>
-      <div padding>
+      <div>
         <button ion-button block type="submit" [disabled]="!myForm.valid" class="botonRegistro">Guardar</button>
       </div>
     </form>

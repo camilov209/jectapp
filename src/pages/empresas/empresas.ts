@@ -13,12 +13,15 @@ import {HomePage} from "../home/home";
 export class EmpresasPage {
 
     dataEmpresa: any[] = [];
+    empresaImagen: any[] = [];
     url = URL_SERVICIOS + '/imagenes/empresa/';
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private _empresas: EmpresaProvider) {
   }
+
+
 
     ionViewDidLoad() {
         this.getAllEmpresas();
@@ -33,7 +36,14 @@ export class EmpresasPage {
             
             for (let i = 0; i < resp.empresas.length; i++){
                 if (resp.empresas[i].tipo === 'TRANSPORT'){
-                    this.dataEmpresa.push(resp.empresas[i]);
+
+                    this.dataEmpresa.push({ lat: resp.empresas[i].lat,
+                                            lng: resp.empresas[i].lng,
+                                            nombre: resp.empresas[i].nombre,
+                                            informacion: resp.empresas[i].informacion,
+                                            imagen: "assets/recursos/empresas/" + i + ".jpg"
+
+                    });
                 }
             }
             console.log(this.dataEmpresa);
@@ -44,6 +54,19 @@ export class EmpresasPage {
 
     home(){
         this.navCtrl.setRoot(HomePage);
+    }
+
+    cambioColorRuta(empresa){
+        switch (empresa){
+            case 'Sotracauca Mettro':
+                return 'danger';
+            case 'Rápido Tambo':
+                return 'secondary';
+            case 'Transpubenza':
+                return 'primary';
+            case 'Translibertad LTDA':
+                return 'advertence';
+        }
     }
 
 }

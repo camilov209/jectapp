@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import {LoadingController, NavController, NavParams, ViewController} from 'ionic-angular';
+import {LoadingController, ModalController, NavController, NavParams, ViewController} from 'ionic-angular';
 import {CompleteTestService} from "../../providers/complete-test-service/complete-test-service";
 import {RutasProvider} from "../../providers/rutas/rutas";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {HomePage} from "../home/home";
+import {ModalRutasPage} from "../modal-rutas/modal-rutas";
 
 @Component({
   selector: 'page-origen-destino',
@@ -45,7 +46,8 @@ export class OrigenDestinoPage {
                     private loadingCtrl: LoadingController,
                     public completeTestService: CompleteTestService,
                     public _rutas: RutasProvider,
-                    public formBuilder: FormBuilder) {
+                    public formBuilder: FormBuilder,
+                    public modalCtrl: ModalController) {
         this.myForm = this.createMyForm();
     }
 
@@ -154,7 +156,7 @@ export class OrigenDestinoPage {
                 return 'secondary';
             case 'Transpubenza':
                 return 'primary';
-            case 'Translibertad':
+            case 'Translibertad LTDA    ':
                 return 'advertence';
         }
     }
@@ -172,6 +174,9 @@ export class OrigenDestinoPage {
     }
 
     goToMap(data){
-        this.navCtrl.push(HomePage, {ruta: data});
+        console.log(data);
+        let modal = this.modalCtrl.create(ModalRutasPage, {ruta: data});
+        modal.present();
+        //this.navCtrl.push(HomePage, {ruta: data});
     }
 }

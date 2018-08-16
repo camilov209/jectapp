@@ -44,12 +44,20 @@
 
 	<ion-card *ngFor="let data of rutasFinal">
 		<ion-list>
-			<button ion-item text-wrap (click)="goToMap(data)">
-				<ion-icon name="bus" [color]="cambioColorRuta(data.empresa)" item-start></ion-icon>
-				<b>RUTA: {{ data.nombre | uppercase }} </b><br>
-				<b>EMPRESA: {{ data.empresa | uppercase }}</b><br>
-				<b>BARRIOS:</b> {{data.barrios }}
-			</button>
+
+			<div (click)="goToMap(data)">
+				<button ion-item text-wrap>
+					<ion-icon name="bus" [color]="cambioColorRuta(data.empresa)" item-start></ion-icon>
+					<b>RUTA: {{ data.nombre | uppercase }} </b><br>
+					<b>EMPRESA: {{ data.empresa | uppercase}}</b><br>
+				</button>
+				<ion-list text-wrap no-border>
+					<ion-list-header>
+						<b>BARRIOS:</b>
+					</ion-list-header>
+					<ion-item *ngFor="let b of data.barrios"><b>- {{ b }}</b> </ion-item>
+				</ion-list>
+			</div>
 
 		</ion-list>
 	</ion-card>

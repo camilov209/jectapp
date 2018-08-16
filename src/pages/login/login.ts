@@ -96,8 +96,8 @@ export class LoginPage {
 
     googlePlusLogin(){
         this.googlePlus.login({
-            'webClientId':'546951244739-sbg6m9m88joe1pr0s7l3nrjqoh6c08ak.apps.googleusercontent.com',
-            'offline': true
+            'webClientId':'115230079984-fc8ro6rv29p2dnu8uehe2nnku4qqoiik.apps.googleusercontent.com',
+            'offline': false
         }).then(res=>{
             firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
                 .then(success=>{
@@ -112,11 +112,21 @@ export class LoginPage {
                     this.usuarioProvider.cargarStorage();
 
                     this.navCtrl.setRoot(HomePage);
+
+                    /*let newUsuario = new Usuario(this.usuarioProvider.user.nombre, this.usuarioProvider.user.email, null, null, null, true);
+
+                    this.usuarioProvider.createUser(newUsuario).subscribe((resp => {
+
+
+                    }), (error)=>{
+                        alert(error.error.errors.message);
+                    });*/
+
                 }).catch(ns=>{
                     alert("Not Successfull " + JSON.stringify(ns));
             })
         }).catch(error=>{
-            alert("Por favor verifica tu conexión a internet.");
+            alert(JSON.stringify(error));
         })
     }
 
